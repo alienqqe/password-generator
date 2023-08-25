@@ -108,7 +108,7 @@ const Generator = () => {
         </div>
       </div>
       <button
-        className='generate-button btn btn-lg d-block w-100 text-center'
+        className='generate-button btn btn-outline-light btn-lg d-block w-100 text-center'
         onClick={password}
       >
         Generate
