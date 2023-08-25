@@ -1,6 +1,10 @@
-import './globals.css'
+'use client'
+import { ReduxProvider } from '@/redux/provider'
+import './globals.scss'
+import 'bootstrap/dist/css/bootstrap.min.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import { useEffect } from 'react'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -14,9 +18,15 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  useEffect(() => {
+    require('bootstrap')
+  }, [])
+
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html lang='en'>
+      <body className={inter.className}>
+        <ReduxProvider>{children}</ReduxProvider>
+      </body>
     </html>
   )
 }
