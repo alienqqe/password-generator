@@ -1,4 +1,4 @@
-// File: C:\Users\Yevhenii\Desktop\password-generator\app\page.tsx
+// File: C:\Users\Yevhenii\Desktop\react projects\password-generator\app\page.tsx
 import * as entry from '../../../app/page.js'
 import type { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

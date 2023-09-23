@@ -8,28 +8,31 @@ import {
   toggleSymbols,
   createPassword,
 } from '@/redux/features/password-slice'
+import PasswordStrengthBar from 'react-password-strength-bar'
 
 const Generator = () => {
   const [length, setLength] = useState(0)
-  const [isUppercase, setUppercase] = useState(false)
+  const [isUppercase, setIsUppercase] = useState(false)
   const [isNumbers, setIsNumbers] = useState(false)
   const [isSymbols, setIsSymbols] = useState(false)
 
-  const result = useAppSelector((state) => state.passwordReducer.value.result)
+  const result: string = useAppSelector(
+    (state) => state.passwordReducer.value.result
+  )
 
   const dispatch = useDispatch<AppDispatch>()
 
-  const uppercase = () => {
+  const setUppercase = () => {
     dispatch(toggleUppercase(isUppercase))
   }
-  const numbers = () => {
+  const setNumbers = () => {
     dispatch(toggleNumbers(isNumbers))
   }
-  const symbols = () => {
+  const setSymbols = () => {
     dispatch(toggleSymbols(isSymbols))
   }
 
-  const password = () => {
+  const setPassword = () => {
     dispatch(createPassword(length))
   }
 
@@ -37,6 +40,8 @@ const Generator = () => {
     await navigator.clipboard.writeText(result)
     alert('Text copied')
   }
+
+  // TODO: make password strong checker
 
   const whiteSpaceRegEx = new RegExp(/\s/g)
 
@@ -46,6 +51,7 @@ const Generator = () => {
         <span className='result'>
           {result?.replaceAll(whiteSpaceRegEx, '')}
         </span>
+
         <button className='btn btn-dark clipboard' onClick={copy}>
           <svg
             xmlns='http://www.w3.org/2000/svg'
@@ -60,7 +66,11 @@ const Generator = () => {
           </svg>
         </button>
       </div>
+
       <div className='settings w-100'>
+        <div className='text-center'>
+          <PasswordStrengthBar password={result} />
+        </div>
         <div className='setting d-flex justify-content-between align-items-center'>
           <label className='px-3'>Password length</label>
           <input
@@ -77,8 +87,8 @@ const Generator = () => {
           <label className='px-3'>Include uppercase letters</label>
           <input
             type='checkbox'
-            onChange={uppercase}
-            onClick={() => setUppercase(!isUppercase)}
+            onChange={setUppercase}
+            onClick={() => setIsUppercase(!isUppercase)}
             checked={isUppercase}
             id='uppercase'
             className='ms-3'
@@ -88,7 +98,7 @@ const Generator = () => {
           <label className='px-3'>Include numbers</label>
           <input
             type='checkbox'
-            onChange={numbers}
+            onChange={setNumbers}
             onClick={() => setIsNumbers(!isNumbers)}
             checked={isNumbers}
             id='uppercase'
@@ -99,7 +109,7 @@ const Generator = () => {
           <label className='px-3'>Include special symbols</label>
           <input
             type='checkbox'
-            onChange={symbols}
+            onChange={setSymbols}
             onClick={() => setIsSymbols(!isSymbols)}
             checked={isSymbols}
             id='uppercase'
@@ -109,7 +119,7 @@ const Generator = () => {
       </div>
       <button
         className='generate-button btn btn-outline-light btn-lg d-block w-100 text-center'
-        onClick={password}
+        onClick={setPassword}
       >
         Generate
       </button>
