@@ -2,13 +2,13 @@
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { AppDispatch, useAppSelector } from '@/redux/store'
+import PasswordStrengthBar from 'react-password-strength-bar'
 import {
   toggleUppercase,
   toggleNumbers,
   toggleSymbols,
   createPassword,
 } from '@/redux/features/password-slice'
-import PasswordStrengthBar from 'react-password-strength-bar'
 
 const Generator = () => {
   const [length, setLength] = useState(0)
@@ -66,11 +66,9 @@ const Generator = () => {
           </svg>
         </button>
       </div>
-
+      <PasswordStrengthBar password={result} />
       <div className='settings w-100'>
-        <div className='text-center'>
-          <PasswordStrengthBar password={result} />
-        </div>
+        <div className='text-center'></div>
         <div className='setting d-flex justify-content-between align-items-center'>
           <label className='px-3'>Password length</label>
           <input
