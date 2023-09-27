@@ -1841,7 +1841,7 @@ var e,n=this&&this.__extends||(e=function(n,t){return e=Object.setPrototypeOf||{
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 /*!
-  * Bootstrap v5.3.2 (https://getbootstrap.com/)
+  * Bootstrap v5.3.1 (https://getbootstrap.com/)
   * Copyright 2011-2023 The Bootstrap Authors (https://github.com/twbs/bootstrap/graphs/contributors)
   * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
   */
@@ -2508,7 +2508,7 @@ var e,n=this&&this.__extends||(e=function(n,t){return e=Object.setPrototypeOf||{
    * Constants
    */
 
-  const VERSION = '5.3.2';
+  const VERSION = '5.3.1';
 
   /**
    * Class definition
@@ -2589,9 +2589,9 @@ var e,n=this&&this.__extends||(e=function(n,t){return e=Object.setPrototypeOf||{
       if (hrefAttribute.includes('#') && !hrefAttribute.startsWith('#')) {
         hrefAttribute = `#${hrefAttribute.split('#')[1]}`;
       }
-      selector = hrefAttribute && hrefAttribute !== '#' ? parseSelector(hrefAttribute.trim()) : null;
+      selector = hrefAttribute && hrefAttribute !== '#' ? hrefAttribute.trim() : null;
     }
-    return selector;
+    return parseSelector(selector);
   };
   const SelectorEngine = {
     find(selector, element = document.documentElement) {
@@ -5887,7 +5887,7 @@ var e,n=this&&this.__extends||(e=function(n,t){return e=Object.setPrototypeOf||{
   const CLASS_DROPDOWN = 'dropdown';
   const SELECTOR_DROPDOWN_TOGGLE = '.dropdown-toggle';
   const SELECTOR_DROPDOWN_MENU = '.dropdown-menu';
-  const NOT_SELECTOR_DROPDOWN_TOGGLE = `:not(${SELECTOR_DROPDOWN_TOGGLE})`;
+  const NOT_SELECTOR_DROPDOWN_TOGGLE = ':not(.dropdown-toggle)';
   const SELECTOR_TAB_PANEL = '.list-group, .nav, [role="tablist"]';
   const SELECTOR_OUTER = '.nav-item, .list-group-item';
   const SELECTOR_INNER = `.nav-link${NOT_SELECTOR_DROPDOWN_TOGGLE}, .list-group-item${NOT_SELECTOR_DROPDOWN_TOGGLE}, [role="tab"]${NOT_SELECTOR_DROPDOWN_TOGGLE}`;
@@ -11299,7 +11299,7 @@ const createProxy = _serveredge.createClientModuleProxy; //# sourceMappingURL=mo
 "use strict";
 /* __next_internal_client_entry_do_not_use__  cjs */ 
 const { createProxy } = __webpack_require__(1363);
-module.exports = createProxy("C:\\Users\\Yevhenii\\Desktop\\react projects\\password-generator\\node_modules\\next\\dist\\client\\components\\app-router.js");
+module.exports = createProxy("C:\\Users\\Yevhenii\\Desktop\\password-generator\\node_modules\\next\\dist\\client\\components\\app-router.js");
  //# sourceMappingURL=app-router.js.map
 
 
@@ -11311,7 +11311,7 @@ module.exports = createProxy("C:\\Users\\Yevhenii\\Desktop\\react projects\\pass
 "use strict";
 /* __next_internal_client_entry_do_not_use__  cjs */ 
 const { createProxy } = __webpack_require__(1363);
-module.exports = createProxy("C:\\Users\\Yevhenii\\Desktop\\react projects\\password-generator\\node_modules\\next\\dist\\client\\components\\error-boundary.js");
+module.exports = createProxy("C:\\Users\\Yevhenii\\Desktop\\password-generator\\node_modules\\next\\dist\\client\\components\\error-boundary.js");
  //# sourceMappingURL=error-boundary.js.map
 
 
@@ -11323,7 +11323,7 @@ module.exports = createProxy("C:\\Users\\Yevhenii\\Desktop\\react projects\\pass
 "use strict";
 /* __next_internal_client_entry_do_not_use__  cjs */ 
 const { createProxy } = __webpack_require__(1363);
-module.exports = createProxy("C:\\Users\\Yevhenii\\Desktop\\react projects\\password-generator\\node_modules\\next\\dist\\client\\components\\layout-router.js");
+module.exports = createProxy("C:\\Users\\Yevhenii\\Desktop\\password-generator\\node_modules\\next\\dist\\client\\components\\layout-router.js");
  //# sourceMappingURL=layout-router.js.map
 
 
@@ -11335,7 +11335,7 @@ module.exports = createProxy("C:\\Users\\Yevhenii\\Desktop\\react projects\\pass
 "use strict";
 /* __next_internal_client_entry_do_not_use__  cjs */ 
 const { createProxy } = __webpack_require__(1363);
-module.exports = createProxy("C:\\Users\\Yevhenii\\Desktop\\react projects\\password-generator\\node_modules\\next\\dist\\client\\components\\not-found-boundary.js");
+module.exports = createProxy("C:\\Users\\Yevhenii\\Desktop\\password-generator\\node_modules\\next\\dist\\client\\components\\not-found-boundary.js");
  //# sourceMappingURL=not-found-boundary.js.map
 
 
@@ -11432,7 +11432,7 @@ if ((typeof exports.default === "function" || typeof exports.default === "object
 "use strict";
 /* __next_internal_client_entry_do_not_use__  cjs */ 
 const { createProxy } = __webpack_require__(1363);
-module.exports = createProxy("C:\\Users\\Yevhenii\\Desktop\\react projects\\password-generator\\node_modules\\next\\dist\\client\\components\\render-from-template-context.js");
+module.exports = createProxy("C:\\Users\\Yevhenii\\Desktop\\password-generator\\node_modules\\next\\dist\\client\\components\\render-from-template-context.js");
  //# sourceMappingURL=render-from-template-context.js.map
 
 
@@ -11480,7 +11480,7 @@ if ((typeof exports.default === "function" || typeof exports.default === "object
 "use strict";
 /* __next_internal_client_entry_do_not_use__  cjs */ 
 const { createProxy } = __webpack_require__(1363);
-module.exports = createProxy("C:\\Users\\Yevhenii\\Desktop\\react projects\\password-generator\\node_modules\\next\\dist\\client\\components\\static-generation-searchparams-bailout-provider.js");
+module.exports = createProxy("C:\\Users\\Yevhenii\\Desktop\\password-generator\\node_modules\\next\\dist\\client\\components\\static-generation-searchparams-bailout-provider.js");
  //# sourceMappingURL=static-generation-searchparams-bailout-provider.js.map
 
 

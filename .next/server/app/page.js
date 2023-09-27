@@ -164,7 +164,7 @@ module.exports = require("url");
 
 /***/ }),
 
-/***/ 9185:
+/***/ 8858:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -198,7 +198,7 @@ const tree = {
         '',
         {
         children: ['__PAGE__', {}, {
-          page: [() => Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 8200)), "C:\\Users\\Yevhenii\\Desktop\\react projects\\password-generator\\app\\page.tsx"],
+          page: [() => Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 8200)), "C:\\Users\\Yevhenii\\Desktop\\password-generator\\app\\page.tsx"],
           metadata: {
     icon: [(async (props) => (await Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 7481))).default(props))],
     apple: [],
@@ -209,7 +209,7 @@ const tree = {
         }]
       },
         {
-        'layout': [() => Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 1921)), "C:\\Users\\Yevhenii\\Desktop\\react projects\\password-generator\\app\\layout.tsx"],
+        'layout': [() => Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 1921)), "C:\\Users\\Yevhenii\\Desktop\\password-generator\\app\\layout.tsx"],
 'not-found': [() => Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 5493, 23)), "next/dist/client/components/not-found-error"],
         metadata: {
     icon: [(async (props) => (await Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 7481))).default(props))],
@@ -221,7 +221,7 @@ const tree = {
       }
       ]
       }.children;
-const pages = ["C:\\Users\\Yevhenii\\Desktop\\react projects\\password-generator\\app\\page.tsx"];
+const pages = ["C:\\Users\\Yevhenii\\Desktop\\password-generator\\app\\page.tsx"];
 
 // @ts-expect-error - replaced by webpack/turbopack loader
 
@@ -253,94 +253,88 @@ const routeModule = new AppPageRouteModule({
 
 /***/ }),
 
-/***/ 7276:
+/***/ 4276:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 7420))
+Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 2311))
 
 /***/ }),
 
-/***/ 9595:
+/***/ 3345:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
 Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 9618))
 
 /***/ }),
 
-/***/ 3361:
+/***/ 9034:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
 Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 1232, 23));
 Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 2987, 23));
-Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 831, 23));
 Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 6926, 23));
+Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 831, 23));
 Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 4282, 23));
 Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 6505, 23))
 
 /***/ }),
 
-/***/ 7420:
+/***/ 2311:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+// ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6786);
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8038);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(8250);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_redux__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _redux_store__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(6728);
-/* harmony import */ var react_password_strength_bar__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(9975);
-/* harmony import */ var _redux_features_password_slice__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(2314);
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, {
+  "default": () => (/* binding */ components_Generator)
+});
+
+// EXTERNAL MODULE: external "next/dist/compiled/react/jsx-runtime"
+var jsx_runtime_ = __webpack_require__(6786);
+// EXTERNAL MODULE: external "next/dist/compiled/react"
+var react_ = __webpack_require__(8038);
+// EXTERNAL MODULE: ./node_modules/react-redux/lib/index.js
+var lib = __webpack_require__(8250);
+// EXTERNAL MODULE: ./redux/store.ts
+var store = __webpack_require__(6728);
+// EXTERNAL MODULE: ./node_modules/react-password-strength-bar/dist/index.js
+var dist = __webpack_require__(9975);
+// EXTERNAL MODULE: ./redux/features/password-slice.ts
+var password_slice = __webpack_require__(2314);
+;// CONCATENATED MODULE: ./app/components/StrentghChecker.tsx
 /* __next_internal_client_entry_do_not_use__ default auto */ 
 
 
-
-
-
-const Generator = ()=>{
-    const [length, setLength] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(0);
-    const [isUppercase, setIsUppercase] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
-    const [isNumbers, setIsNumbers] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
-    const [isSymbols, setIsSymbols] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
-    const result = (0,_redux_store__WEBPACK_IMPORTED_MODULE_3__/* .useAppSelector */ .C)((state)=>state.passwordReducer.value.result);
-    const dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_2__.useDispatch)();
-    const setUppercase = ()=>{
-        dispatch((0,_redux_features_password_slice__WEBPACK_IMPORTED_MODULE_5__/* .toggleUppercase */ .RC)(isUppercase));
-    };
-    const setNumbers = ()=>{
-        dispatch((0,_redux_features_password_slice__WEBPACK_IMPORTED_MODULE_5__/* .toggleNumbers */ .RX)(isNumbers));
-    };
-    const setSymbols = ()=>{
-        dispatch((0,_redux_features_password_slice__WEBPACK_IMPORTED_MODULE_5__/* .toggleSymbols */ .fq)(isSymbols));
-    };
-    const setPassword = ()=>{
-        dispatch((0,_redux_features_password_slice__WEBPACK_IMPORTED_MODULE_5__/* .createPassword */ .oG)(length));
-    };
+const StrentghChecker = ()=>{
+    const [password, setPassword] = (0,react_.useState)("");
     const copy = async ()=>{
-        await navigator.clipboard.writeText(result);
+        await navigator.clipboard.writeText(password);
         alert("Text copied");
     };
-    // TODO: make password strong checker
-    const whiteSpaceRegEx = new RegExp(/\s/g);
-    return /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-        className: "generator-container container mt-5 shadow p-3  rounded",
+    return /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
+        className: "password-container ms-md-5 mt-5 shadow p-3 rounded",
         children: [
-            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                className: "result-container",
+            /*#__PURE__*/ jsx_runtime_.jsx("h4", {
+                className: "pb-1",
+                children: "Password Strength Check"
+            }),
+            /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
+                className: "",
                 children: [
-                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("span", {
-                        className: "result",
-                        children: result?.replaceAll(whiteSpaceRegEx, "")
+                    /*#__PURE__*/ jsx_runtime_.jsx("span", {
+                        className: "password-text",
+                        children: /*#__PURE__*/ jsx_runtime_.jsx("input", {
+                            type: "text",
+                            value: password,
+                            onChange: (e)=>setPassword(e.target.value)
+                        })
                     }),
-                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("button", {
-                        className: "btn btn-dark clipboard",
+                    /*#__PURE__*/ jsx_runtime_.jsx("button", {
+                        className: "btn btn-dark clipboard ms-1 mb-1",
                         onClick: copy,
-                        children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("svg", {
+                        children: /*#__PURE__*/ (0,jsx_runtime_.jsxs)("svg", {
                             xmlns: "http://www.w3.org/2000/svg",
                             width: "16",
                             height: "16",
@@ -348,10 +342,10 @@ const Generator = ()=>{
                             className: "bi bi-clipboard mb-1",
                             viewBox: "0 0 16 16",
                             children: [
-                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("path", {
+                                /*#__PURE__*/ jsx_runtime_.jsx("path", {
                                     d: "M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"
                                 }),
-                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("path", {
+                                /*#__PURE__*/ jsx_runtime_.jsx("path", {
                                     d: "M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"
                                 })
                             ]
@@ -359,95 +353,180 @@ const Generator = ()=>{
                     })
                 ]
             }),
-            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_password_strength_bar__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .Z, {
-                password: result
-            }),
-            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                className: "settings w-100",
-                children: [
-                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-                        className: "text-center"
-                    }),
-                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                        className: "setting d-flex justify-content-between align-items-center",
-                        children: [
-                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("label", {
-                                className: "px-3",
-                                children: "Password length"
-                            }),
-                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("input", {
-                                type: "number",
-                                value: length,
-                                onChange: (e)=>setLength(parseInt(e.target.value)),
-                                id: "length",
-                                min: "4",
-                                max: "20",
-                                className: "ms-3"
-                            })
-                        ]
-                    }),
-                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                        className: "setting ",
-                        children: [
-                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("label", {
-                                className: "px-3",
-                                children: "Include uppercase letters"
-                            }),
-                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("input", {
-                                type: "checkbox",
-                                onChange: setUppercase,
-                                onClick: ()=>setIsUppercase(!isUppercase),
-                                checked: isUppercase,
-                                id: "uppercase",
-                                className: "ms-3"
-                            })
-                        ]
-                    }),
-                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                        className: "setting ",
-                        children: [
-                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("label", {
-                                className: "px-3",
-                                children: "Include numbers"
-                            }),
-                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("input", {
-                                type: "checkbox",
-                                onChange: setNumbers,
-                                onClick: ()=>setIsNumbers(!isNumbers),
-                                checked: isNumbers,
-                                id: "uppercase",
-                                className: "ms-3"
-                            })
-                        ]
-                    }),
-                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                        className: "setting ",
-                        children: [
-                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("label", {
-                                className: "px-3",
-                                children: "Include special symbols"
-                            }),
-                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("input", {
-                                type: "checkbox",
-                                onChange: setSymbols,
-                                onClick: ()=>setIsSymbols(!isSymbols),
-                                checked: isSymbols,
-                                id: "uppercase",
-                                className: "ms-3"
-                            })
-                        ]
-                    })
-                ]
-            }),
-            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("button", {
-                className: "generate-button btn btn-outline-light btn-lg d-block w-100 text-center",
-                onClick: setPassword,
-                children: "Generate"
+            /*#__PURE__*/ jsx_runtime_.jsx("div", {
+                className: "",
+                children: /*#__PURE__*/ jsx_runtime_.jsx(dist/* default */.Z, {
+                    password: password
+                })
             })
         ]
     });
 };
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Generator);
+/* harmony default export */ const components_StrentghChecker = (StrentghChecker);
+
+;// CONCATENATED MODULE: ./app/components/Generator.tsx
+/* __next_internal_client_entry_do_not_use__ default auto */ 
+
+
+
+
+
+
+const Generator = ()=>{
+    const [length, setLength] = (0,react_.useState)(0);
+    const [isUppercase, setIsUppercase] = (0,react_.useState)(false);
+    const [isNumbers, setIsNumbers] = (0,react_.useState)(false);
+    const [isSymbols, setIsSymbols] = (0,react_.useState)(false);
+    const result = (0,store/* useAppSelector */.C)((state)=>state.passwordReducer.value.result);
+    const dispatch = (0,lib.useDispatch)();
+    const setUppercase = ()=>{
+        dispatch((0,password_slice/* toggleUppercase */.RC)(isUppercase));
+    };
+    const setNumbers = ()=>{
+        dispatch((0,password_slice/* toggleNumbers */.RX)(isNumbers));
+    };
+    const setSymbols = ()=>{
+        dispatch((0,password_slice/* toggleSymbols */.fq)(isSymbols));
+    };
+    const setPassword = ()=>{
+        dispatch((0,password_slice/* createPassword */.oG)(length));
+    };
+    const copy = async ()=>{
+        await navigator.clipboard.writeText(result);
+        alert("Text copied");
+    };
+    // TODO: MAKE RESPONSIVE
+    const whiteSpaceRegEx = new RegExp(/\s/g);
+    return /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
+        className: "d-flex align-items-center justify-content-center flex-column flex-md-row main-container",
+        children: [
+            /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
+                className: "generator-container mt-5 shadow p-3 d-block rounded",
+                children: [
+                    /*#__PURE__*/ jsx_runtime_.jsx("h4", {
+                        className: "pb-1",
+                        children: "Password Generator"
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
+                        className: "result-container",
+                        children: [
+                            /*#__PURE__*/ jsx_runtime_.jsx("span", {
+                                className: "result",
+                                children: result?.replaceAll(whiteSpaceRegEx, "")
+                            }),
+                            /*#__PURE__*/ jsx_runtime_.jsx("button", {
+                                className: "btn btn-dark clipboard",
+                                onClick: copy,
+                                children: /*#__PURE__*/ (0,jsx_runtime_.jsxs)("svg", {
+                                    xmlns: "http://www.w3.org/2000/svg",
+                                    width: "16",
+                                    height: "16",
+                                    fill: "currentColor",
+                                    className: "bi bi-clipboard mb-1",
+                                    viewBox: "0 0 16 16",
+                                    children: [
+                                        /*#__PURE__*/ jsx_runtime_.jsx("path", {
+                                            d: "M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"
+                                        }),
+                                        /*#__PURE__*/ jsx_runtime_.jsx("path", {
+                                            d: "M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"
+                                        })
+                                    ]
+                                })
+                            })
+                        ]
+                    }),
+                    /*#__PURE__*/ jsx_runtime_.jsx(dist/* default */.Z, {
+                        password: result
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
+                        className: "settings w-100",
+                        children: [
+                            /*#__PURE__*/ jsx_runtime_.jsx("div", {
+                                className: "text-center"
+                            }),
+                            /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
+                                className: "setting d-flex justify-content-between align-items-center",
+                                children: [
+                                    /*#__PURE__*/ jsx_runtime_.jsx("label", {
+                                        className: "px-3",
+                                        children: "Password length"
+                                    }),
+                                    /*#__PURE__*/ jsx_runtime_.jsx("input", {
+                                        type: "number",
+                                        value: length,
+                                        onChange: (e)=>setLength(parseInt(e.target.value)),
+                                        id: "length",
+                                        min: "4",
+                                        className: "ms-3"
+                                    })
+                                ]
+                            }),
+                            /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
+                                className: "setting ",
+                                children: [
+                                    /*#__PURE__*/ jsx_runtime_.jsx("label", {
+                                        className: "px-3",
+                                        children: "Include uppercase letters"
+                                    }),
+                                    /*#__PURE__*/ jsx_runtime_.jsx("input", {
+                                        type: "checkbox",
+                                        onChange: setUppercase,
+                                        onClick: ()=>setIsUppercase(!isUppercase),
+                                        checked: isUppercase,
+                                        id: "uppercase",
+                                        className: "ms-3"
+                                    })
+                                ]
+                            }),
+                            /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
+                                className: "setting ",
+                                children: [
+                                    /*#__PURE__*/ jsx_runtime_.jsx("label", {
+                                        className: "px-3",
+                                        children: "Include numbers"
+                                    }),
+                                    /*#__PURE__*/ jsx_runtime_.jsx("input", {
+                                        type: "checkbox",
+                                        onChange: setNumbers,
+                                        onClick: ()=>setIsNumbers(!isNumbers),
+                                        checked: isNumbers,
+                                        id: "uppercase",
+                                        className: "ms-3"
+                                    })
+                                ]
+                            }),
+                            /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
+                                className: "setting ",
+                                children: [
+                                    /*#__PURE__*/ jsx_runtime_.jsx("label", {
+                                        className: "px-3",
+                                        children: "Include special symbols"
+                                    }),
+                                    /*#__PURE__*/ jsx_runtime_.jsx("input", {
+                                        type: "checkbox",
+                                        onChange: setSymbols,
+                                        onClick: ()=>setIsSymbols(!isSymbols),
+                                        checked: isSymbols,
+                                        id: "uppercase",
+                                        className: "ms-3"
+                                    })
+                                ]
+                            })
+                        ]
+                    }),
+                    /*#__PURE__*/ jsx_runtime_.jsx("button", {
+                        className: "generate-button btn btn-outline-light btn-lg d-block w-100 text-center",
+                        onClick: setPassword,
+                        children: "Generate"
+                    })
+                ]
+            }),
+            /*#__PURE__*/ jsx_runtime_.jsx(components_StrentghChecker, {})
+        ]
+    });
+};
+/* harmony default export */ const components_Generator = (Generator);
 
 
 /***/ }),
@@ -538,6 +617,7 @@ function RootLayout({ children }) {
 const initialState = {
     value: {
         length: 0,
+        isSwitched: undefined,
         isUppercase: undefined,
         isNumbers: undefined,
         isSymbols: undefined,
@@ -624,7 +704,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1363);
 
-const proxy = (0,next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__.createProxy)(String.raw`C:\Users\Yevhenii\Desktop\react projects\password-generator\app\layout.tsx`)
+const proxy = (0,next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__.createProxy)(String.raw`C:\Users\Yevhenii\Desktop\password-generator\app\layout.tsx`)
 
 // Accessing the __esModule property and exporting $$typeof are required here.
 // The __esModule getter forces the proxy target to create the default export
@@ -658,7 +738,7 @@ var jsx_runtime_ = __webpack_require__(6786);
 var module_proxy = __webpack_require__(1363);
 ;// CONCATENATED MODULE: ./app/components/Generator.tsx
 
-const proxy = (0,module_proxy.createProxy)(String.raw`C:\Users\Yevhenii\Desktop\react projects\password-generator\app\components\Generator.tsx`)
+const proxy = (0,module_proxy.createProxy)(String.raw`C:\Users\Yevhenii\Desktop\password-generator\app\components\Generator.tsx`)
 
 // Accessing the __esModule property and exporting $$typeof are required here.
 // The __esModule getter forces the proxy target to create the default export
@@ -676,7 +756,7 @@ const Navbar = ()=>{
         className: "text-center text-light shadow-sm p-3 mb-5 rounded",
         children: /*#__PURE__*/ jsx_runtime_.jsx("h1", {
             className: "mt-2",
-            children: "Password Generator"
+            children: "Passwordy"
         })
     });
 };
@@ -736,7 +816,7 @@ __webpack_require__.r(__webpack_exports__);
 var __webpack_require__ = require("../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [587,679], () => (__webpack_exec__(9185)));
+var __webpack_exports__ = __webpack_require__.X(0, [587,679], () => (__webpack_exec__(8858)));
 module.exports = __webpack_exports__;
 
 })();

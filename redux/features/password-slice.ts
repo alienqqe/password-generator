@@ -15,6 +15,7 @@ type PasswordState = {
 const initialState = {
   value: {
     length: 0,
+    isSwitched: undefined,
     isUppercase: undefined,
     isNumbers: undefined,
     isSymbols: undefined,
