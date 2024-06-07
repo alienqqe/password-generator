@@ -7335,7 +7335,7 @@ const _default = chalk; //# sourceMappingURL=chalk.js.map
 
 /***/ }),
 
-/***/ 4561:
+/***/ 4232:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
@@ -7535,7 +7535,7 @@ Object.defineProperty(exports, "DraftModeProvider", ({
         return DraftModeProvider;
     }
 }));
-const _apiutils = __webpack_require__(4561);
+const _apiutils = __webpack_require__(4232);
 class DraftModeProvider {
     constructor(previewProps, req, cookies, mutableCookies){
         var _cookies_get;
@@ -10881,7 +10881,7 @@ function addPathPrefix(path, prefix) {
 
 /***/ }),
 
-/***/ 8225:
+/***/ 6660:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
@@ -10946,7 +10946,7 @@ Object.defineProperty(exports, "formatNextPathnameInfo", ({
 }));
 const _removetrailingslash = __webpack_require__(5105);
 const _addpathprefix = __webpack_require__(2595);
-const _addpathsuffix = __webpack_require__(8225);
+const _addpathsuffix = __webpack_require__(6660);
 const _addlocale = __webpack_require__(8625);
 function formatNextPathnameInfo(info) {
     let pathname = (0, _addlocale.addLocale)(info.pathname, info.locale, info.buildId ? undefined : info.defaultLocale, info.ignorePrefix);
