@@ -10,6 +10,8 @@ type PasswordState = {
   isNumbers: boolean | undefined
   isSymbols: boolean | undefined
   result: string
+  isSavingToHistory: boolean
+  strengthCheckerInputValue: string
 }
 
 const initialState = {
@@ -20,6 +22,8 @@ const initialState = {
     isNumbers: undefined,
     isSymbols: undefined,
     result: '',
+    isSavingToHistory: false,
+    strengthCheckerInputValue: '',
   } as PasswordState,
 } as InitialState
 
@@ -27,16 +31,22 @@ export const password = createSlice({
   name: 'password',
   initialState: initialState,
   reducers: {
-    toggleUppercase: (state, action: PayloadAction<boolean>) => {
-      state.value.isUppercase = !action.payload
+    changeStrengthCheckerValue: (state, action: PayloadAction<string>) => {
+      state.value.strengthCheckerInputValue = action.payload
     },
-    toggleNumbers: (state, action: PayloadAction<boolean>) => {
-      state.value.isNumbers = !action.payload
+    setSavingDone: (state) => {
+      state.value.isSavingToHistory = false
     },
-    toggleSymbols: (state, action: PayloadAction<boolean>) => {
-      state.value.isSymbols = !action.payload
+    setResult: (state, action: PayloadAction<string>) => {
+      state.value.result = action.payload
+    },
+    setSavingToHistory: (state, action: PayloadAction<boolean>) => {
+      state.value.isSavingToHistory = action.payload
     },
     createPassword: (state, action: PayloadAction<number>) => {
+      state.value.isSavingToHistory = true
+      state.value.length = action.payload
+
       const passwordCharacters = () => {
         let password = ''
         let characters = `abcdefghijklmnopqrstuvwxyz${
@@ -58,19 +68,16 @@ export const password = createSlice({
         return password
       }
 
-      return {
-        value: {
-          length: action.payload,
-          result: passwordCharacters(),
-          isUppercase: state.value.isUppercase,
-          isSymbols: state.value.isSymbols,
-          isNumbers: state.value.isNumbers,
-        },
-      }
+      state.value.result = passwordCharacters()
     },
   },
 })
 
-export const { toggleUppercase, toggleNumbers, toggleSymbols, createPassword } =
-  password.actions
+export const {
+  createPassword,
+  setSavingDone,
+  changeStrengthCheckerValue,
+  setResult,
+  setSavingToHistory,
+} = password.actions
 export default password.reducer

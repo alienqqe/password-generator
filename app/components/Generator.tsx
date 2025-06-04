@@ -1,40 +1,181 @@
 'use client'
-import { useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { AppDispatch, useAppSelector } from '@/redux/store'
 import PasswordStrengthBar from 'react-password-strength-bar'
 import {
-  toggleUppercase,
-  toggleNumbers,
-  toggleSymbols,
   createPassword,
+  setSavingDone,
+  setResult,
+  setSavingToHistory,
 } from '@/redux/features/password-slice'
 import StrentghChecker from './StrentghChecker'
+import { jwtDecode } from 'jwt-decode'
+import { loadTokenFromStorage } from '@/redux/features/auth-slice'
 
 const Generator = () => {
+  const [settingsFetched, setSettingsFetched] = useState(false)
+  const [justGenerated, setJustGenerated] = useState(false)
   const [length, setLength] = useState(0)
   const [isUppercase, setIsUppercase] = useState(false)
   const [isNumbers, setIsNumbers] = useState(false)
   const [isSymbols, setIsSymbols] = useState(false)
+  const [isSavingToSettings, setSavingToSettings] = useState(false)
+
+  const dispatch = useDispatch<AppDispatch>()
+  useEffect(() => {
+    dispatch(loadTokenFromStorage())
+  }, [dispatch])
 
   const result: string = useAppSelector(
     (state) => state.passwordReducer.value.result
   )
+  const token: string | null = useAppSelector(
+    (state) => state.authReducer.value.token
+  )
 
-  const dispatch = useDispatch<AppDispatch>()
+  const getSettingsUrl =
+    'https://password-gen-backend-production.up.railway.app/api/settings/getSettings'
 
-  const setUppercase = () => {
-    dispatch(toggleUppercase(isUppercase))
+  // read setting from db
+  const fetchSettings = async () => {
+    if (!token) return
+
+    try {
+      const res = await fetch(getSettingsUrl, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      })
+
+      if (!res.ok) throw new Error('Failed to read settings')
+      const data = await res.json()
+      setIsUppercase(data.data[0].isUpperCase)
+
+      setIsNumbers(data.data[0].isNumbers)
+
+      setIsSymbols(data.data[0].isSymbols)
+
+      setLength(data.data[0].passwordLength)
+
+      setSettingsFetched(true)
+    } catch (err) {
+      console.error(err)
+    }
   }
-  const setNumbers = () => {
-    dispatch(toggleNumbers(isNumbers))
-  }
-  const setSymbols = () => {
-    dispatch(toggleSymbols(isSymbols))
-  }
+  useEffect(() => {
+    fetchSettings()
+  }, [])
+
+  useEffect(() => {
+    if (!isSavingToSettings) {
+      fetchSettings()
+    }
+  }, [isSavingToSettings])
+
+  const saveSettingsUrl =
+    'https://password-gen-backend-production.up.railway.app/api/settings/set'
+
+  // save settings to the db
+  useEffect(() => {
+    if (!settingsFetched || !token) return
+    setSavingToSettings(true)
+
+    try {
+      fetch(saveSettingsUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          isSymbols: isSymbols,
+          isUpperCase: isUppercase,
+          isNumbers: isNumbers,
+          passwordLength: length,
+        }),
+      })
+        .then((res) => {
+          if (!res.ok) throw new Error('Failed to save settings')
+          return res.json()
+        })
+        .then((data) => {
+          console.log('Password saved:', data)
+        })
+        .catch((err) => {
+          console.error('POST error:', err)
+        })
+    } catch (err) {
+      console.error(err)
+    } finally {
+      setSavingToSettings(false)
+    }
+  }, [isSymbols, isUppercase, isNumbers, length, settingsFetched])
+
+  const url =
+    'https://password-gen-backend-production.up.railway.app/api/password/save'
+
+  // save password to the history
+  useEffect(() => {
+    const whiteSpaceRegEx = new RegExp(/\s/g)
+
+    if (!justGenerated || !result || result.trim() === '') return
+
+    setJustGenerated(true)
+    dispatch(setSavingToHistory(true))
+
+    if (!token) return
+
+    try {
+      fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          password: result.replaceAll(whiteSpaceRegEx, ''),
+        }),
+      })
+        .then((res) => {
+          if (!res.ok) throw new Error('Failed to save password')
+          return res.json()
+        })
+        .then((data) => {
+          dispatch(setSavingDone())
+          console.log('Password saved:', data)
+        })
+        .catch((err) => {
+          console.error('POST error:', err)
+          dispatch(setSavingDone())
+        })
+    } catch (err) {
+      console.error('JWT decode error:', err)
+      dispatch(setSavingDone())
+    }
+  }, [result])
 
   const setPassword = () => {
-    dispatch(createPassword(length))
+    let password = ''
+    let characters = `abcdefghijklmnopqrstuvwxyz${
+      isUppercase ? 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' : ''
+    }${isSymbols ? '!@#$%^&*()<>,.?/[]{}-=_+|/' : ''}${
+      isNumbers ? '0123456789' : ''
+    }
+        `
+
+    while (password.length < length) {
+      password +=
+        characters[
+          Math.floor(Math.random() * characters.replaceAll(/\s/g, '').length)
+        ]
+    }
+
+    setJustGenerated(true)
+    dispatch(setResult(password))
+    console.log(password)
   }
 
   const copy = async () => {
@@ -47,7 +188,7 @@ const Generator = () => {
   return (
     <div className='d-flex align-items-center justify-content-center flex-column flex-md-row main-container'>
       <div className='generator-container mt-5 shadow p-3 d-block rounded'>
-        <h4 className='pb-1'>Password Generator</h4>
+        <h4 className='pb-1 ms-3 ms-md-0'>Password Generator</h4>
         <div className='result-container d-inline-block'>
           <input
             className='d-inline-block ms-1'
@@ -56,7 +197,7 @@ const Generator = () => {
           />
         </div>
         <button
-          className='btn btn-dark clipboard-btn d-inline ms-2'
+          className='btn btn-dark clipboard-btn d-inline ms-2 '
           onClick={copy}
         >
           <svg
@@ -94,7 +235,6 @@ const Generator = () => {
             <label className='px-3'>Include uppercase letters</label>
             <input
               type='checkbox'
-              onChange={setUppercase}
               onClick={() => setIsUppercase(!isUppercase)}
               checked={isUppercase}
               id='uppercase'
@@ -105,7 +245,6 @@ const Generator = () => {
             <label className='px-3'>Include numbers</label>
             <input
               type='checkbox'
-              onChange={setNumbers}
               onClick={() => setIsNumbers(!isNumbers)}
               checked={isNumbers}
               id='uppercase'
@@ -116,7 +255,6 @@ const Generator = () => {
             <label className='px-3'>Include special symbols</label>
             <input
               type='checkbox'
-              onChange={setSymbols}
               onClick={() => setIsSymbols(!isSymbols)}
               checked={isSymbols}
               id='uppercase'
@@ -126,13 +264,12 @@ const Generator = () => {
         </div>
         <button
           className='generate-button btn btn-outline-light btn-lg d-block w-100 text-center'
-          disabled={length >= 1 && length <= 20 ? false : true}
+          disabled={length >= 4 && length <= 20 ? false : true}
           onClick={setPassword}
         >
           Generate
         </button>
       </div>
-      <StrentghChecker />
     </div>
   )
 }

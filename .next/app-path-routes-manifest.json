@@ -1,4 +1,7 @@
 {
   "/page": "/",
-  "/favicon.ico/route": "/favicon.ico"
+  "/favicon.ico/route": "/favicon.ico",
+  "/login/page": "/login",
+  "/register/page": "/register",
+  "/backend/node_modules/router/lib/route": "/backend/node_modules/router/lib"
 }

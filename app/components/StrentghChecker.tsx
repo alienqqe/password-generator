@@ -1,13 +1,20 @@
 'use client'
 
+import { changeStrengthCheckerValue } from '@/redux/features/password-slice'
+import { AppDispatch, useAppSelector } from '@/redux/store'
 import { useState } from 'react'
 import PasswordStrengthBar from 'react-password-strength-bar'
+import { useDispatch } from 'react-redux'
 
 const StrentghChecker = () => {
-  const [password, setPassword] = useState('')
+  const dispatch = useDispatch<AppDispatch>()
+
+  const strentghCheckerValue: string = useAppSelector(
+    (state) => state.passwordReducer.value.strengthCheckerInputValue
+  )
 
   const copy = async () => {
-    await navigator.clipboard.writeText(password)
+    await navigator.clipboard.writeText(strentghCheckerValue)
     alert('Text copied')
   }
   return (
@@ -17,8 +24,10 @@ const StrentghChecker = () => {
         <span className='password-text'>
           <input
             type='text'
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={strentghCheckerValue}
+            onChange={(e) =>
+              dispatch(changeStrengthCheckerValue(e.target.value))
+            }
           />
         </span>
 
@@ -37,7 +46,7 @@ const StrentghChecker = () => {
         </button>
       </div>
       <div className=''>
-        <PasswordStrengthBar password={password} />
+        <PasswordStrengthBar password={strentghCheckerValue} />
       </div>
     </div>
   )

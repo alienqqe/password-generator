@@ -156,6 +156,14 @@ module.exports = require("path");
 
 /***/ }),
 
+/***/ 2781:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("stream");
+
+/***/ }),
+
 /***/ 7310:
 /***/ ((module) => {
 
@@ -198,7 +206,7 @@ const tree = {
         '',
         {
         children: ['__PAGE__', {}, {
-          page: [() => Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 4561)), "C:\\Users\\Yevhenii\\Desktop\\react projects\\password-generator\\app\\page.tsx"],
+          page: [() => Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 2838)), "C:\\Users\\Yevhenii\\Desktop\\react projects\\password-generator\\app\\page.tsx"],
           metadata: {
     icon: [(async (props) => (await Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 7481))).default(props))],
     apple: [],
@@ -253,33 +261,26 @@ const routeModule = new AppPageRouteModule({
 
 /***/ }),
 
-/***/ 7276:
+/***/ 2537:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 2311))
+Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 8562))
 
 /***/ }),
 
-/***/ 9595:
+/***/ 6261:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 9618))
-
-/***/ }),
-
-/***/ 3361:
-/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
-
-Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 1232, 23));
+Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 4282, 23));
+Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 6505, 23));
 Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 2987, 23));
 Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 831, 23));
 Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 6926, 23));
-Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 4282, 23));
-Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 6505, 23))
+Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 1232, 23))
 
 /***/ }),
 
-/***/ 2311:
+/***/ 8562:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -288,7 +289,7 @@ __webpack_require__.r(__webpack_exports__);
 
 // EXPORTS
 __webpack_require__.d(__webpack_exports__, {
-  "default": () => (/* binding */ components_Generator)
+  "default": () => (/* binding */ Home)
 });
 
 // EXTERNAL MODULE: external "next/dist/compiled/react/jsx-runtime"
@@ -303,14 +304,477 @@ var store = __webpack_require__(6728);
 var dist = __webpack_require__(9975);
 // EXTERNAL MODULE: ./redux/features/password-slice.ts
 var password_slice = __webpack_require__(2314);
+// EXTERNAL MODULE: ./redux/features/auth-slice.ts
+var auth_slice = __webpack_require__(8035);
+;// CONCATENATED MODULE: ./app/components/Generator.tsx
+/* __next_internal_client_entry_do_not_use__ default auto */ 
+
+
+
+
+
+
+const Generator = ()=>{
+    const [settingsFetched, setSettingsFetched] = (0,react_.useState)(false);
+    const [justGenerated, setJustGenerated] = (0,react_.useState)(false);
+    const [length, setLength] = (0,react_.useState)(0);
+    const [isUppercase, setIsUppercase] = (0,react_.useState)(false);
+    const [isNumbers, setIsNumbers] = (0,react_.useState)(false);
+    const [isSymbols, setIsSymbols] = (0,react_.useState)(false);
+    const [isSavingToSettings, setSavingToSettings] = (0,react_.useState)(false);
+    const dispatch = (0,lib.useDispatch)();
+    (0,react_.useEffect)(()=>{
+        dispatch((0,auth_slice/* loadTokenFromStorage */.qb)());
+    }, [
+        dispatch
+    ]);
+    const result = (0,store/* useAppSelector */.C)((state)=>state.passwordReducer.value.result);
+    const token = (0,store/* useAppSelector */.C)((state)=>state.authReducer.value.token);
+    const getSettingsUrl = "https://password-gen-backend-production.up.railway.app/api/settings/getSettings";
+    // read setting from db
+    const fetchSettings = async ()=>{
+        if (!token) return;
+        try {
+            const res = await fetch(getSettingsUrl, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            if (!res.ok) throw new Error("Failed to read settings");
+            const data = await res.json();
+            setIsUppercase(data.data[0].isUpperCase);
+            setIsNumbers(data.data[0].isNumbers);
+            setIsSymbols(data.data[0].isSymbols);
+            setLength(data.data[0].passwordLength);
+            setSettingsFetched(true);
+        } catch (err) {
+            console.error(err);
+        }
+    };
+    (0,react_.useEffect)(()=>{
+        fetchSettings();
+    }, []);
+    (0,react_.useEffect)(()=>{
+        if (!isSavingToSettings) {
+            fetchSettings();
+        }
+    }, [
+        isSavingToSettings
+    ]);
+    const saveSettingsUrl = "https://password-gen-backend-production.up.railway.app/api/settings/set";
+    // save settings to the db
+    (0,react_.useEffect)(()=>{
+        if (!settingsFetched || !token) return;
+        setSavingToSettings(true);
+        try {
+            fetch(saveSettingsUrl, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    isSymbols: isSymbols,
+                    isUpperCase: isUppercase,
+                    isNumbers: isNumbers,
+                    passwordLength: length
+                })
+            }).then((res)=>{
+                if (!res.ok) throw new Error("Failed to save settings");
+                return res.json();
+            }).then((data)=>{
+                console.log("Password saved:", data);
+            }).catch((err)=>{
+                console.error("POST error:", err);
+            });
+        } catch (err) {
+            console.error(err);
+        } finally{
+            setSavingToSettings(false);
+        }
+    }, [
+        isSymbols,
+        isUppercase,
+        isNumbers,
+        length,
+        settingsFetched
+    ]);
+    const url = "https://password-gen-backend-production.up.railway.app/api/password/save";
+    // save password to the history
+    (0,react_.useEffect)(()=>{
+        const whiteSpaceRegEx = new RegExp(/\s/g);
+        if (!justGenerated || !result || result.trim() === "") return;
+        setJustGenerated(true);
+        dispatch((0,password_slice/* setSavingToHistory */.H4)(true));
+        if (!token) return;
+        try {
+            fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    password: result.replaceAll(whiteSpaceRegEx, "")
+                })
+            }).then((res)=>{
+                if (!res.ok) throw new Error("Failed to save password");
+                return res.json();
+            }).then((data)=>{
+                dispatch((0,password_slice/* setSavingDone */.AS)());
+                console.log("Password saved:", data);
+            }).catch((err)=>{
+                console.error("POST error:", err);
+                dispatch((0,password_slice/* setSavingDone */.AS)());
+            });
+        } catch (err) {
+            console.error("JWT decode error:", err);
+            dispatch((0,password_slice/* setSavingDone */.AS)());
+        }
+    }, [
+        result
+    ]);
+    const setPassword = ()=>{
+        let password = "";
+        let characters = `abcdefghijklmnopqrstuvwxyz${isUppercase ? "ABCDEFGHIJKLMNOPQRSTUVWXYZ" : ""}${isSymbols ? "!@#$%^&*()<>,.?/[]{}-=_+|/" : ""}${isNumbers ? "0123456789" : ""}
+        `;
+        while(password.length < length){
+            password += characters[Math.floor(Math.random() * characters.replaceAll(/\s/g, "").length)];
+        }
+        setJustGenerated(true);
+        dispatch((0,password_slice/* setResult */.ag)(password));
+        console.log(password);
+    };
+    const copy = async ()=>{
+        await navigator.clipboard.writeText(result);
+        alert("Text copied");
+    };
+    const whiteSpaceRegEx = new RegExp(/\s/g);
+    return /*#__PURE__*/ jsx_runtime_.jsx("div", {
+        className: "d-flex align-items-center justify-content-center flex-column flex-md-row main-container",
+        children: /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
+            className: "generator-container mt-5 shadow p-3 d-block rounded",
+            children: [
+                /*#__PURE__*/ jsx_runtime_.jsx("h4", {
+                    className: "pb-1 ms-3 ms-md-0",
+                    children: "Password Generator"
+                }),
+                /*#__PURE__*/ jsx_runtime_.jsx("div", {
+                    className: "result-container d-inline-block",
+                    children: /*#__PURE__*/ jsx_runtime_.jsx("input", {
+                        className: "d-inline-block ms-1",
+                        type: "text",
+                        value: result?.replaceAll(whiteSpaceRegEx, "")
+                    })
+                }),
+                /*#__PURE__*/ jsx_runtime_.jsx("button", {
+                    className: "btn btn-dark clipboard-btn d-inline ms-2 ",
+                    onClick: copy,
+                    children: /*#__PURE__*/ (0,jsx_runtime_.jsxs)("svg", {
+                        xmlns: "http://www.w3.org/2000/svg",
+                        width: "16",
+                        height: "16",
+                        fill: "currentColor",
+                        className: "bi bi-clipboard mb-md-1",
+                        viewBox: "0 0 16 16",
+                        children: [
+                            /*#__PURE__*/ jsx_runtime_.jsx("path", {
+                                d: "M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"
+                            }),
+                            /*#__PURE__*/ jsx_runtime_.jsx("path", {
+                                d: "M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"
+                            })
+                        ]
+                    })
+                }),
+                /*#__PURE__*/ jsx_runtime_.jsx(dist/* default */.Z, {
+                    password: result
+                }),
+                /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
+                    className: "settings w-100",
+                    children: [
+                        /*#__PURE__*/ jsx_runtime_.jsx("div", {
+                            className: "text-center"
+                        }),
+                        /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
+                            className: "setting d-flex justify-content-between align-items-center",
+                            children: [
+                                /*#__PURE__*/ jsx_runtime_.jsx("label", {
+                                    className: "px-3",
+                                    children: "Password length"
+                                }),
+                                /*#__PURE__*/ jsx_runtime_.jsx("input", {
+                                    type: "number",
+                                    value: length,
+                                    onChange: (e)=>parseInt(e.target.value) >= 1 || !e.target.value ? setLength(parseInt(e.target.value)) : setLength(4),
+                                    id: "length",
+                                    min: "1",
+                                    max: "20",
+                                    className: "ms-3"
+                                })
+                            ]
+                        }),
+                        /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
+                            className: "setting ",
+                            children: [
+                                /*#__PURE__*/ jsx_runtime_.jsx("label", {
+                                    className: "px-3",
+                                    children: "Include uppercase letters"
+                                }),
+                                /*#__PURE__*/ jsx_runtime_.jsx("input", {
+                                    type: "checkbox",
+                                    onClick: ()=>setIsUppercase(!isUppercase),
+                                    checked: isUppercase,
+                                    id: "uppercase",
+                                    className: "ms-3"
+                                })
+                            ]
+                        }),
+                        /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
+                            className: "setting ",
+                            children: [
+                                /*#__PURE__*/ jsx_runtime_.jsx("label", {
+                                    className: "px-3",
+                                    children: "Include numbers"
+                                }),
+                                /*#__PURE__*/ jsx_runtime_.jsx("input", {
+                                    type: "checkbox",
+                                    onClick: ()=>setIsNumbers(!isNumbers),
+                                    checked: isNumbers,
+                                    id: "uppercase",
+                                    className: "ms-3"
+                                })
+                            ]
+                        }),
+                        /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
+                            className: "setting ",
+                            children: [
+                                /*#__PURE__*/ jsx_runtime_.jsx("label", {
+                                    className: "px-3",
+                                    children: "Include special symbols"
+                                }),
+                                /*#__PURE__*/ jsx_runtime_.jsx("input", {
+                                    type: "checkbox",
+                                    onClick: ()=>setIsSymbols(!isSymbols),
+                                    checked: isSymbols,
+                                    id: "uppercase",
+                                    className: "ms-3"
+                                })
+                            ]
+                        })
+                    ]
+                }),
+                /*#__PURE__*/ jsx_runtime_.jsx("button", {
+                    className: "generate-button btn btn-outline-light btn-lg d-block w-100 text-center",
+                    disabled: length >= 4 && length <= 20 ? false : true,
+                    onClick: setPassword,
+                    children: "Generate"
+                })
+            ]
+        })
+    });
+};
+/* harmony default export */ const components_Generator = (Generator);
+
+;// CONCATENATED MODULE: ./app/components/Navbar.tsx
+/* __next_internal_client_entry_do_not_use__ default auto */ 
+
+
+
+const Navbar = ({ userData })=>{
+    const dispatch = (0,lib.useDispatch)();
+    const handleButtonLogOut = ()=>{
+        if (confirm("Are you sure you want to logout?")) {
+            dispatch((0,password_slice/* setResult */.ag)(""));
+            dispatch((0,auth_slice/* logout */.kS)());
+        }
+    };
+    return /*#__PURE__*/ jsx_runtime_.jsx(jsx_runtime_.Fragment, {
+        children: /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
+            className: "text-center d-flex justify-content-between flex-row-reverse text-light shadow-sm p-3 mb-5 rounded",
+            children: [
+                /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
+                    className: "d-flex align-items-center justify-content-center gap-3",
+                    children: [
+                        /*#__PURE__*/ jsx_runtime_.jsx("h4", {
+                            className: "text-dark",
+                            children: userData?.email
+                        }),
+                        /*#__PURE__*/ jsx_runtime_.jsx("button", {
+                            className: "btn btn-primary",
+                            onClick: handleButtonLogOut,
+                            children: "Logout"
+                        })
+                    ]
+                }),
+                /*#__PURE__*/ jsx_runtime_.jsx("h1", {
+                    className: "mt-2 text-dark fs-1 d-none d-md-inline",
+                    children: "Password Generator"
+                })
+            ]
+        })
+    });
+};
+/* harmony default export */ const components_Navbar = (Navbar);
+
+// EXTERNAL MODULE: ./node_modules/next/navigation.js
+var navigation = __webpack_require__(7114);
+// EXTERNAL MODULE: ./node_modules/react-loader-spinner/dist/main.js
+var main = __webpack_require__(4550);
+// EXTERNAL MODULE: ./node_modules/jwt-decode/build/esm/index.js
+var esm = __webpack_require__(8228);
+// EXTERNAL MODULE: ./app/styles/PasswordHistory.scss
+var PasswordHistory = __webpack_require__(79);
+;// CONCATENATED MODULE: ./app/components/PasswordHistory.tsx
+
+
+
+
+
+
+
+
+const PasswordHistory_PasswordHistory = ()=>{
+    const [passwords, setPasswords] = (0,react_.useState)([]);
+    const isSaving = (0,store/* useAppSelector */.C)((state)=>state.passwordReducer.value.isSavingToHistory);
+    const dispatch = (0,lib.useDispatch)();
+    (0,react_.useEffect)(()=>{
+        dispatch((0,auth_slice/* loadTokenFromStorage */.qb)());
+    }, [
+        dispatch
+    ]);
+    const token = (0,store/* useAppSelector */.C)((state)=>state.authReducer.value.token);
+    if (!token) return /*#__PURE__*/ jsx_runtime_.jsx("div", {
+        className: "d-flex justify-content-center align-items-center",
+        style: {
+            height: "100vh"
+        },
+        children: /*#__PURE__*/ jsx_runtime_.jsx(main.Oval, {
+            visible: true,
+            height: "80",
+            width: "80",
+            color: "#4fa94d",
+            ariaLabel: "oval-loading",
+            wrapperStyle: {},
+            wrapperClass: ""
+        })
+    });
+    const url = "https://password-gen-backend-production.up.railway.app/api/password/getHistory";
+    // fetchHistory
+    const fetchData = async ()=>{
+        try {
+            const res = await fetch(url, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            if (!res.ok) throw new Error("Failed to fetch passwords");
+            const data = await res.json();
+            setPasswords(data?.data[0]?.passwordsGenerated ?? []);
+            console.log("Fetched data:", data?.data[0]?.passwordsGenerated);
+        } catch (err) {
+            console.error(err);
+        }
+    };
+    // fetch data on mount
+    (0,react_.useEffect)(()=>{
+        fetchData();
+    }, []);
+    (0,react_.useEffect)(()=>{
+        if (!isSaving) {
+            fetchData();
+            console.log(isSaving);
+        }
+    }, [
+        isSaving
+    ]);
+    const deleteUrl = "https://password-gen-backend-production.up.railway.app/api/password/override";
+    const handleDelete = async (password)=>{
+        try {
+            const res = await fetch(deleteUrl, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    passwordForDelete: password
+                })
+            });
+            if (!res.ok) throw new Error("Failed to delete password");
+            const updated = passwords.filter((item)=>item !== password);
+            setPasswords(updated);
+        } catch (err) {
+            console.error(err);
+        }
+    };
+    return /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
+        className: "password-container dropdown ms-md-5 mt-5 shadow p-3 rounded",
+        children: [
+            /*#__PURE__*/ jsx_runtime_.jsx("button", {
+                className: "btn btn-sm dropdown- mt-1",
+                type: "button",
+                id: "dropdownMenuButton1",
+                "data-bs-toggle": "dropdown",
+                "data-bs-auto-close": "outside",
+                "aria-expanded": "false",
+                style: {
+                    background: "linear-gradient(135deg, #6e8efb, #a777e3)",
+                    borderRadius: "1rem",
+                    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
+                    fontSize: "1.25rem",
+                    border: "none"
+                },
+                children: /*#__PURE__*/ jsx_runtime_.jsx("h5", {
+                    children: "Password History"
+                })
+            }),
+            /*#__PURE__*/ jsx_runtime_.jsx("ul", {
+                className: "dropdown-menu show",
+                "aria-labelledby": "dropdownMenuButton1",
+                children: passwords.length === 0 ? /*#__PURE__*/ jsx_runtime_.jsx("li", {
+                    className: "dropdown-item text-muted",
+                    children: "No saved passwords"
+                }) : passwords.map((item, index)=>/*#__PURE__*/ (0,jsx_runtime_.jsxs)("li", {
+                        className: "dropdown-item d-flex justify-content-between align-items-center",
+                        children: [
+                            /*#__PURE__*/ jsx_runtime_.jsx("span", {
+                                onClick: ()=>{
+                                    dispatch((0,password_slice/* changeStrengthCheckerValue */.Zv)(item));
+                                },
+                                children: item
+                            }),
+                            /*#__PURE__*/ jsx_runtime_.jsx("button", {
+                                className: "btn d-inline",
+                                onClick: (e)=>{
+                                    e.stopPropagation();
+                                    handleDelete(item);
+                                },
+                                children: "\uD83D\uDDD1️"
+                            })
+                        ]
+                    }, `${item}-${index}`))
+            })
+        ]
+    });
+};
+/* harmony default export */ const components_PasswordHistory = (PasswordHistory_PasswordHistory);
+
 ;// CONCATENATED MODULE: ./app/components/StrentghChecker.tsx
 /* __next_internal_client_entry_do_not_use__ default auto */ 
 
 
+
+
 const StrentghChecker = ()=>{
-    const [password, setPassword] = (0,react_.useState)("");
+    const dispatch = (0,lib.useDispatch)();
+    const strentghCheckerValue = (0,store/* useAppSelector */.C)((state)=>state.passwordReducer.value.strengthCheckerInputValue);
     const copy = async ()=>{
-        await navigator.clipboard.writeText(password);
+        await navigator.clipboard.writeText(strentghCheckerValue);
         alert("Text copied");
     };
     return /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
@@ -327,8 +791,8 @@ const StrentghChecker = ()=>{
                         className: "password-text",
                         children: /*#__PURE__*/ jsx_runtime_.jsx("input", {
                             type: "text",
-                            value: password,
-                            onChange: (e)=>setPassword(e.target.value)
+                            value: strentghCheckerValue,
+                            onChange: (e)=>dispatch((0,password_slice/* changeStrengthCheckerValue */.Zv)(e.target.value))
                         })
                     }),
                     /*#__PURE__*/ jsx_runtime_.jsx("button", {
@@ -356,7 +820,7 @@ const StrentghChecker = ()=>{
             /*#__PURE__*/ jsx_runtime_.jsx("div", {
                 className: "",
                 children: /*#__PURE__*/ jsx_runtime_.jsx(dist/* default */.Z, {
-                    password: password
+                    password: strentghCheckerValue
                 })
             })
         ]
@@ -364,7 +828,7 @@ const StrentghChecker = ()=>{
 };
 /* harmony default export */ const components_StrentghChecker = (StrentghChecker);
 
-;// CONCATENATED MODULE: ./app/components/Generator.tsx
+;// CONCATENATED MODULE: ./app/page.tsx
 /* __next_internal_client_entry_do_not_use__ default auto */ 
 
 
@@ -372,326 +836,133 @@ const StrentghChecker = ()=>{
 
 
 
-const Generator = ()=>{
-    const [length, setLength] = (0,react_.useState)(0);
-    const [isUppercase, setIsUppercase] = (0,react_.useState)(false);
-    const [isNumbers, setIsNumbers] = (0,react_.useState)(false);
-    const [isSymbols, setIsSymbols] = (0,react_.useState)(false);
-    const result = (0,store/* useAppSelector */.C)((state)=>state.passwordReducer.value.result);
+
+
+
+
+
+function Home() {
+    const router = (0,navigation.useRouter)();
+    const [userData, setUserData] = (0,react_.useState)(null);
+    const [isFetching, setFetching] = (0,react_.useState)(false);
     const dispatch = (0,lib.useDispatch)();
-    const setUppercase = ()=>{
-        dispatch((0,password_slice/* toggleUppercase */.RC)(isUppercase));
-    };
-    const setNumbers = ()=>{
-        dispatch((0,password_slice/* toggleNumbers */.RX)(isNumbers));
-    };
-    const setSymbols = ()=>{
-        dispatch((0,password_slice/* toggleSymbols */.fq)(isSymbols));
-    };
-    const setPassword = ()=>{
-        dispatch((0,password_slice/* createPassword */.oG)(length));
-    };
-    const copy = async ()=>{
-        await navigator.clipboard.writeText(result);
-        alert("Text copied");
-    };
-    const whiteSpaceRegEx = new RegExp(/\s/g);
-    return /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
-        className: "d-flex align-items-center justify-content-center flex-column flex-md-row main-container",
+    const token = (0,store/* useAppSelector */.C)((state)=>state.authReducer.value.token);
+    (0,react_.useEffect)(()=>{
+        dispatch((0,auth_slice/* loadTokenFromStorage */.qb)());
+    }, [
+        dispatch
+    ]);
+    (0,react_.useEffect)(()=>{
+        try {
+            if (!token) return;
+            const decoded = (0,esm/* jwtDecode */.o)(token);
+            if (!decoded.exp) {
+                console.warn("Decoded token doesnt have expiration date! Logging out");
+                dispatch((0,auth_slice/* logout */.kS)());
+                router.push("/login");
+                return;
+            }
+            const expire = decoded.exp * 1000;
+            const timeout = expire - Date.now() - 10000;
+            if (timeout <= 0) {
+                dispatch((0,auth_slice/* logout */.kS)());
+                router.push("/login");
+                return;
+            }
+            const timer = setTimeout(()=>{
+                dispatch((0,auth_slice/* logout */.kS)());
+                router.push("/login");
+            }, timeout);
+            return ()=>clearTimeout(timer);
+        } catch (err) {
+            console.error("Failed to decode token", err);
+            dispatch((0,auth_slice/* logout */.kS)());
+            router.push("/login");
+        }
+    }, []);
+    const url = "https://password-gen-backend-production.up.railway.app/api/auth/me";
+    (0,react_.useEffect)(()=>{
+        setFetching(true);
+        const fetchUserData = async ()=>{
+            try {
+                if (!token) {
+                    router.push("/login");
+                    return;
+                }
+                const res = await fetch(url, {
+                    method: "GET",
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+                if (!res.ok) {
+                    router.push("/login");
+                    return;
+                }
+                const jsonData = await res.json();
+                setUserData(jsonData);
+                console.log(userData);
+            } catch (err) {
+                console.error("Failed to fetch data", err);
+                router.push("/login");
+            } finally{
+                setFetching(false);
+            }
+        };
+        fetchUserData();
+    }, []);
+    (0,react_.useEffect)(()=>{
+        if (!token) {
+            router.push("/login");
+        }
+    }, [
+        token,
+        router
+    ]);
+    const isLoggedIn = token && userData;
+    if (isFetching || !isLoggedIn) {
+        return /*#__PURE__*/ jsx_runtime_.jsx("div", {
+            className: "d-flex justify-content-center align-items-center",
+            style: {
+                height: "100vh"
+            },
+            children: /*#__PURE__*/ jsx_runtime_.jsx(main.Oval, {
+                visible: true,
+                height: "80",
+                width: "80",
+                color: "#4fa94d",
+                ariaLabel: "oval-loading",
+                wrapperStyle: {},
+                wrapperClass: ""
+            })
+        });
+    }
+    return /*#__PURE__*/ (0,jsx_runtime_.jsxs)(jsx_runtime_.Fragment, {
         children: [
+            /*#__PURE__*/ jsx_runtime_.jsx(components_Navbar, {
+                userData: userData
+            }),
             /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
-                className: "generator-container mt-5 shadow p-3 d-block rounded",
+                className: "d-flex align-items-center justify-content-center flex-column flex-md-row",
                 children: [
-                    /*#__PURE__*/ jsx_runtime_.jsx("h4", {
-                        className: "pb-1",
-                        children: "Password Generator"
-                    }),
-                    /*#__PURE__*/ jsx_runtime_.jsx("div", {
-                        className: "result-container d-inline-block",
-                        children: /*#__PURE__*/ jsx_runtime_.jsx("input", {
-                            className: "d-inline-block ms-1",
-                            type: "text",
-                            value: result?.replaceAll(whiteSpaceRegEx, "")
-                        })
-                    }),
-                    /*#__PURE__*/ jsx_runtime_.jsx("button", {
-                        className: "btn btn-dark clipboard-btn d-inline ms-2",
-                        onClick: copy,
-                        children: /*#__PURE__*/ (0,jsx_runtime_.jsxs)("svg", {
-                            xmlns: "http://www.w3.org/2000/svg",
-                            width: "16",
-                            height: "16",
-                            fill: "currentColor",
-                            className: "bi bi-clipboard mb-md-1",
-                            viewBox: "0 0 16 16",
-                            children: [
-                                /*#__PURE__*/ jsx_runtime_.jsx("path", {
-                                    d: "M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"
-                                }),
-                                /*#__PURE__*/ jsx_runtime_.jsx("path", {
-                                    d: "M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"
-                                })
-                            ]
-                        })
-                    }),
-                    /*#__PURE__*/ jsx_runtime_.jsx(dist/* default */.Z, {
-                        password: result
-                    }),
+                    /*#__PURE__*/ jsx_runtime_.jsx(components_Generator, {}),
                     /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
-                        className: "settings w-100",
+                        className: "d-flex align-items-center flex-column justify-content-center",
                         children: [
-                            /*#__PURE__*/ jsx_runtime_.jsx("div", {
-                                className: "text-center"
-                            }),
-                            /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
-                                className: "setting d-flex justify-content-between align-items-center",
-                                children: [
-                                    /*#__PURE__*/ jsx_runtime_.jsx("label", {
-                                        className: "px-3",
-                                        children: "Password length"
-                                    }),
-                                    /*#__PURE__*/ jsx_runtime_.jsx("input", {
-                                        type: "number",
-                                        value: length,
-                                        onChange: (e)=>parseInt(e.target.value) >= 1 || !e.target.value ? setLength(parseInt(e.target.value)) : setLength(4),
-                                        id: "length",
-                                        min: "1",
-                                        max: "20",
-                                        className: "ms-3"
-                                    })
-                                ]
-                            }),
-                            /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
-                                className: "setting ",
-                                children: [
-                                    /*#__PURE__*/ jsx_runtime_.jsx("label", {
-                                        className: "px-3",
-                                        children: "Include uppercase letters"
-                                    }),
-                                    /*#__PURE__*/ jsx_runtime_.jsx("input", {
-                                        type: "checkbox",
-                                        onChange: setUppercase,
-                                        onClick: ()=>setIsUppercase(!isUppercase),
-                                        checked: isUppercase,
-                                        id: "uppercase",
-                                        className: "ms-3"
-                                    })
-                                ]
-                            }),
-                            /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
-                                className: "setting ",
-                                children: [
-                                    /*#__PURE__*/ jsx_runtime_.jsx("label", {
-                                        className: "px-3",
-                                        children: "Include numbers"
-                                    }),
-                                    /*#__PURE__*/ jsx_runtime_.jsx("input", {
-                                        type: "checkbox",
-                                        onChange: setNumbers,
-                                        onClick: ()=>setIsNumbers(!isNumbers),
-                                        checked: isNumbers,
-                                        id: "uppercase",
-                                        className: "ms-3"
-                                    })
-                                ]
-                            }),
-                            /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
-                                className: "setting ",
-                                children: [
-                                    /*#__PURE__*/ jsx_runtime_.jsx("label", {
-                                        className: "px-3",
-                                        children: "Include special symbols"
-                                    }),
-                                    /*#__PURE__*/ jsx_runtime_.jsx("input", {
-                                        type: "checkbox",
-                                        onChange: setSymbols,
-                                        onClick: ()=>setIsSymbols(!isSymbols),
-                                        checked: isSymbols,
-                                        id: "uppercase",
-                                        className: "ms-3"
-                                    })
-                                ]
-                            })
+                            /*#__PURE__*/ jsx_runtime_.jsx(components_StrentghChecker, {}),
+                            /*#__PURE__*/ jsx_runtime_.jsx(components_PasswordHistory, {})
                         ]
-                    }),
-                    /*#__PURE__*/ jsx_runtime_.jsx("button", {
-                        className: "generate-button btn btn-outline-light btn-lg d-block w-100 text-center",
-                        disabled: length >= 1 && length <= 20 ? false : true,
-                        onClick: setPassword,
-                        children: "Generate"
                     })
                 ]
-            }),
-            /*#__PURE__*/ jsx_runtime_.jsx(components_StrentghChecker, {})
+            })
         ]
     });
-};
-/* harmony default export */ const components_Generator = (Generator);
-
-
-/***/ }),
-
-/***/ 9618:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-// ESM COMPAT FLAG
-__webpack_require__.r(__webpack_exports__);
-
-// EXPORTS
-__webpack_require__.d(__webpack_exports__, {
-  "default": () => (/* binding */ RootLayout),
-  metadata: () => (/* binding */ metadata)
-});
-
-// EXTERNAL MODULE: external "next/dist/compiled/react/jsx-runtime"
-var jsx_runtime_ = __webpack_require__(6786);
-// EXTERNAL MODULE: ./node_modules/next/font/google/target.css?{"path":"app\\layout.tsx","import":"Inter","arguments":[{"subsets":["latin"]}],"variableName":"inter"}
-var target_path_app_layout_tsx_import_Inter_arguments_subsets_latin_variableName_inter_ = __webpack_require__(2224);
-var target_path_app_layout_tsx_import_Inter_arguments_subsets_latin_variableName_inter_default = /*#__PURE__*/__webpack_require__.n(target_path_app_layout_tsx_import_Inter_arguments_subsets_latin_variableName_inter_);
-// EXTERNAL MODULE: ./redux/store.ts
-var store = __webpack_require__(6728);
-// EXTERNAL MODULE: ./node_modules/react-redux/lib/index.js
-var lib = __webpack_require__(8250);
-;// CONCATENATED MODULE: ./redux/provider.tsx
-/* __next_internal_client_entry_do_not_use__ ReduxProvider auto */ 
-
-
-function ReduxProvider({ children }) {
-    return /*#__PURE__*/ jsx_runtime_.jsx(lib.Provider, {
-        store: store/* store */.h,
-        children: children
-    });
-}
-
-// EXTERNAL MODULE: ./app/globals.scss
-var globals = __webpack_require__(6435);
-// EXTERNAL MODULE: ./node_modules/bootstrap/dist/css/bootstrap.min.css
-var bootstrap_min = __webpack_require__(9973);
-// EXTERNAL MODULE: external "next/dist/compiled/react"
-var react_ = __webpack_require__(8038);
-;// CONCATENATED MODULE: ./app/layout.tsx
-/* __next_internal_client_entry_do_not_use__ metadata,default auto */ 
-
-
-
-
-
-const metadata = {
-    title: "Create Next App",
-    description: "Generated by create next app"
-};
-function RootLayout({ children }) {
-    (0,react_.useEffect)(()=>{
-        __webpack_require__(6867);
-    }, []);
-    return /*#__PURE__*/ jsx_runtime_.jsx("html", {
-        lang: "en",
-        children: /*#__PURE__*/ jsx_runtime_.jsx("body", {
-            className: (target_path_app_layout_tsx_import_Inter_arguments_subsets_latin_variableName_inter_default()).className,
-            children: /*#__PURE__*/ jsx_runtime_.jsx(ReduxProvider, {
-                children: children
-            })
-        })
-    });
 }
 
 
 /***/ }),
 
-/***/ 2314:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   RC: () => (/* binding */ toggleUppercase),
-/* harmony export */   RX: () => (/* binding */ toggleNumbers),
-/* harmony export */   ZP: () => (__WEBPACK_DEFAULT_EXPORT__),
-/* harmony export */   fq: () => (/* binding */ toggleSymbols),
-/* harmony export */   oG: () => (/* binding */ createPassword)
-/* harmony export */ });
-/* unused harmony export password */
-/* harmony import */ var _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1388);
-/* harmony import */ var _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_0__);
-
-const initialState = {
-    value: {
-        length: 0,
-        isSwitched: undefined,
-        isUppercase: undefined,
-        isNumbers: undefined,
-        isSymbols: undefined,
-        result: ""
-    }
-};
-const password = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_0__.createSlice)({
-    name: "password",
-    initialState: initialState,
-    reducers: {
-        toggleUppercase: (state, action)=>{
-            state.value.isUppercase = !action.payload;
-        },
-        toggleNumbers: (state, action)=>{
-            state.value.isNumbers = !action.payload;
-        },
-        toggleSymbols: (state, action)=>{
-            state.value.isSymbols = !action.payload;
-        },
-        createPassword: (state, action)=>{
-            const passwordCharacters = ()=>{
-                let password = "";
-                let characters = `abcdefghijklmnopqrstuvwxyz${state.value.isUppercase ? "ABCDEFGHIJKLMNOPQRSTUVWXYZ" : ""}${state.value.isSymbols ? "!@#$%^&*()<>,.?/[]{}-=_+|/" : ""}${state.value.isNumbers ? "0123456789" : ""}
-        `;
-                while(password.length < action.payload){
-                    password += characters[Math.floor(Math.random() * characters.replaceAll(/\s/g, "").length)];
-                }
-                return password;
-            };
-            return {
-                value: {
-                    length: action.payload,
-                    result: passwordCharacters(),
-                    isUppercase: state.value.isUppercase,
-                    isSymbols: state.value.isSymbols,
-                    isNumbers: state.value.isNumbers
-                }
-            };
-        }
-    }
-});
-const { toggleUppercase, toggleNumbers, toggleSymbols, createPassword } = password.actions;
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (password.reducer);
-
-
-/***/ }),
-
-/***/ 6728:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   C: () => (/* binding */ useAppSelector),
-/* harmony export */   h: () => (/* binding */ store)
-/* harmony export */ });
-/* harmony import */ var _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1388);
-/* harmony import */ var _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _features_password_slice__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2314);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8250);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_redux__WEBPACK_IMPORTED_MODULE_1__);
-
-
-
-const store = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_2__.configureStore)({
-    reducer: {
-        passwordReducer: _features_password_slice__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .ZP
-    }
-});
-const useAppSelector = react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector;
-
-
-/***/ }),
-
-/***/ 1921:
+/***/ 2838:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -699,12 +970,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   $$typeof: () => (/* binding */ $$typeof),
 /* harmony export */   __esModule: () => (/* binding */ __esModule),
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
-/* harmony export */   metadata: () => (/* binding */ e0)
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1363);
 
-const proxy = (0,next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__.createProxy)(String.raw`C:\Users\Yevhenii\Desktop\react projects\password-generator\app\layout.tsx`)
+const proxy = (0,next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__.createProxy)(String.raw`C:\Users\Yevhenii\Desktop\react projects\password-generator\app\page.tsx`)
 
 // Accessing the __esModule property and exporting $$typeof are required here.
 // The __esModule getter forces the proxy target to create the default export
@@ -712,97 +982,13 @@ const proxy = (0,next_dist_build_webpack_loaders_next_flight_loader_module_proxy
 // is a client boundary.
 const { __esModule, $$typeof } = proxy;
 const __default__ = proxy.default;
-
-const e0 = proxy["metadata"];
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__default__);
 
 /***/ }),
 
-/***/ 4561:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-// ESM COMPAT FLAG
-__webpack_require__.r(__webpack_exports__);
-
-// EXPORTS
-__webpack_require__.d(__webpack_exports__, {
-  "default": () => (/* binding */ Home)
-});
-
-// EXTERNAL MODULE: external "next/dist/compiled/react/jsx-runtime"
-var jsx_runtime_ = __webpack_require__(6786);
-// EXTERNAL MODULE: ./node_modules/next/dist/build/webpack/loaders/next-flight-loader/module-proxy.js
-var module_proxy = __webpack_require__(1363);
-;// CONCATENATED MODULE: ./app/components/Generator.tsx
-
-const proxy = (0,module_proxy.createProxy)(String.raw`C:\Users\Yevhenii\Desktop\react projects\password-generator\app\components\Generator.tsx`)
-
-// Accessing the __esModule property and exporting $$typeof are required here.
-// The __esModule getter forces the proxy target to create the default export
-// and the $$typeof value is for rendering logic to determine if the module
-// is a client boundary.
-const { __esModule, $$typeof } = proxy;
-const __default__ = proxy.default;
-
-
-/* harmony default export */ const Generator = (__default__);
-;// CONCATENATED MODULE: ./app/components/Navbar.tsx
-
-const Navbar = ()=>{
-    return /*#__PURE__*/ jsx_runtime_.jsx("div", {
-        className: "text-center text-light shadow-sm p-3 mb-5 rounded",
-        children: /*#__PURE__*/ jsx_runtime_.jsx("h1", {
-            className: "mt-2 text-dark fs-1",
-            children: "\uD83C\uDD7F\uD83C\uDD70\uD83C\uDD82\uD83C\uDD82\uD83C\uDD86\uD83C\uDD7E\uD83C\uDD81\uD83C\uDD73 \uD83C\uDD7F\uD83C\uDD7B\uD83C\uDD70\uD83C\uDD7D\uD83C\uDD74\uD83C\uDD83"
-        })
-    });
-};
-/* harmony default export */ const components_Navbar = (Navbar);
-
-;// CONCATENATED MODULE: ./app/page.tsx
-
-
-
-function Home() {
-    return /*#__PURE__*/ (0,jsx_runtime_.jsxs)(jsx_runtime_.Fragment, {
-        children: [
-            /*#__PURE__*/ jsx_runtime_.jsx(components_Navbar, {}),
-            /*#__PURE__*/ jsx_runtime_.jsx(Generator, {})
-        ]
-    });
-}
-
-
-/***/ }),
-
-/***/ 7481:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var next_dist_lib_metadata_get_metadata_route__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(85);
-/* harmony import */ var next_dist_lib_metadata_get_metadata_route__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(next_dist_lib_metadata_get_metadata_route__WEBPACK_IMPORTED_MODULE_0__);
-  
-
-  /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((props) => {
-    const imageData = {"type":"image/x-icon","sizes":"16x16"}
-    const imageUrl = (0,next_dist_lib_metadata_get_metadata_route__WEBPACK_IMPORTED_MODULE_0__.fillMetadataSegment)(".", props.params, "favicon.ico")
-
-    return [{
-      ...imageData,
-      url: imageUrl + "",
-    }]
-  });
-
-/***/ }),
-
-/***/ 6435:
+/***/ 79:
 /***/ (() => {
 
 
@@ -816,7 +1002,7 @@ __webpack_require__.r(__webpack_exports__);
 var __webpack_require__ = require("../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [587,679], () => (__webpack_exec__(9185)));
+var __webpack_exports__ = __webpack_require__.X(0, [587,128,285,479], () => (__webpack_exec__(9185)));
 module.exports = __webpack_exports__;
 
 })();
