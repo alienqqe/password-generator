@@ -27,8 +27,11 @@ export default function Home() {
   const token = useAppSelector((state) => state.authReducer.value.token)
 
   useEffect(() => {
-    dispatch(loadTokenFromStorage())
-    setIsTokenLoaded(true)
+    const load = async () => {
+      await dispatch(loadTokenFromStorage())
+      setIsTokenLoaded(true)
+    }
+    load()
   }, [dispatch])
 
   useEffect(() => {
@@ -63,7 +66,7 @@ export default function Home() {
       dispatch(logout())
       router.push('/login')
     }
-  }, [])
+  }, [token, isTokenLoaded])
 
   const url =
     'https://password-gen-backend-production.up.railway.app/api/auth/me'
@@ -72,8 +75,7 @@ export default function Home() {
     setFetching(true)
     const fetchUserData = async () => {
       try {
-        if (!token) {
-          router.push('/login')
+        if (!token || isTokenLoaded) {
           return
         }
 
@@ -99,7 +101,7 @@ export default function Home() {
     }
 
     fetchUserData()
-  }, [])
+  }, [token, isTokenLoaded])
 
   useEffect(() => {
     if (!token && isTokenLoaded) {

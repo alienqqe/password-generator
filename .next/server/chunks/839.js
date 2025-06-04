@@ -49,8 +49,11 @@ function AuthForm({ mode }) {
     const [error, setError] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
     const [isTokenLoaded, setLoaded] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
     (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(()=>{
-        dispatch((0,_redux_features_auth_slice__WEBPACK_IMPORTED_MODULE_7__/* .loadTokenFromStorage */ .qb)());
-        setLoaded(true);
+        const loadToken = async ()=>{
+            await dispatch((0,_redux_features_auth_slice__WEBPACK_IMPORTED_MODULE_7__/* .loadTokenFromStorage */ .qb)());
+            setLoaded(true);
+        };
+        loadToken();
     }, [
         dispatch
     ]);
@@ -59,7 +62,9 @@ function AuthForm({ mode }) {
             router.push("/");
         }
     }, [
-        token
+        token,
+        isTokenLoaded,
+        router
     ]);
     const handleSubmit = async (e)=>{
         e.preventDefault();

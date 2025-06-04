@@ -28,15 +28,18 @@ export default function AuthForm({ mode }: AuthFormProps) {
   const [isTokenLoaded, setLoaded] = useState(false)
 
   useEffect(() => {
-    dispatch(loadTokenFromStorage())
-    setLoaded(true)
+    const loadToken = async () => {
+      await dispatch(loadTokenFromStorage())
+      setLoaded(true)
+    }
+    loadToken()
   }, [dispatch])
 
   useEffect(() => {
     if (token && isTokenLoaded) {
       router.push('/')
     }
-  }, [token])
+  }, [token, isTokenLoaded, router])
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()

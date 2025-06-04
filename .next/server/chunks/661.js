@@ -108,6 +108,10 @@ const initialState = {
         token: null
     }
 };
+const loadTokenFromStorage = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_0__.createAsyncThunk)("auth/loadTokenFromStorage", async ()=>{
+    if (false) {}
+    return null;
+});
 const auth = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_0__.createSlice)({
     name: "auth",
     initialState: initialState,
@@ -119,14 +123,15 @@ const auth = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_0__.createSlice)({
         logout: (state)=>{
             state.value.token = null;
             localStorage.removeItem("token");
-        },
-        loadTokenFromStorage: (state)=>{
-            const storedToken = localStorage.getItem("token");
-            state.value.token = storedToken;
         }
+    },
+    extraReducers: (builder)=>{
+        builder.addCase(loadTokenFromStorage.fulfilled, (state, action)=>{
+            state.value.token = action.payload;
+        });
     }
 });
-const { login, logout, loadTokenFromStorage } = auth.actions;
+const { login, logout } = auth.actions;
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (auth.reducer);
 
 

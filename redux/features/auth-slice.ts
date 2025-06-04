@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
 
 type InitialState = {
   value: AuthState
@@ -14,6 +14,16 @@ const initialState = {
   } as AuthState,
 } as InitialState
 
+export const loadTokenFromStorage = createAsyncThunk(
+  'auth/loadTokenFromStorage',
+  async () => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('token')
+    }
+    return null
+  }
+)
+
 export const auth = createSlice({
   name: 'auth',
   initialState: initialState,
@@ -26,13 +36,14 @@ export const auth = createSlice({
       state.value.token = null
       localStorage.removeItem('token')
     },
-    loadTokenFromStorage: (state) => {
-      const storedToken = localStorage.getItem('token')
-      state.value.token = storedToken
-    },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(loadTokenFromStorage.fulfilled, (state, action) => {
+      state.value.token = action.payload
+    })
   },
 })
 
-export const { login, logout, loadTokenFromStorage } = auth.actions
+export const { login, logout } = auth.actions
 
 export default auth.reducer

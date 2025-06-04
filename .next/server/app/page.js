@@ -837,8 +837,11 @@ function Home() {
     const dispatch = (0,lib.useDispatch)();
     const token = (0,store/* useAppSelector */.C)((state)=>state.authReducer.value.token);
     (0,react_.useEffect)(()=>{
-        dispatch((0,auth_slice/* loadTokenFromStorage */.qb)());
-        setIsTokenLoaded(true);
+        const load = async ()=>{
+            await dispatch((0,auth_slice/* loadTokenFromStorage */.qb)());
+            setIsTokenLoaded(true);
+        };
+        load();
     }, [
         dispatch
     ]);
@@ -870,14 +873,16 @@ function Home() {
             dispatch((0,auth_slice/* logout */.kS)());
             router.push("/login");
         }
-    }, []);
+    }, [
+        token,
+        isTokenLoaded
+    ]);
     const url = "https://password-gen-backend-production.up.railway.app/api/auth/me";
     (0,react_.useEffect)(()=>{
         setFetching(true);
         const fetchUserData = async ()=>{
             try {
-                if (!token) {
-                    router.push("/login");
+                if (!token || isTokenLoaded) {
                     return;
                 }
                 const res = await fetch(url, {
@@ -901,7 +906,10 @@ function Home() {
             }
         };
         fetchUserData();
-    }, []);
+    }, [
+        token,
+        isTokenLoaded
+    ]);
     (0,react_.useEffect)(()=>{
         if (!token && isTokenLoaded) {
             router.push("/login");
