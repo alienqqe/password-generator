@@ -33,7 +33,7 @@ export default function AuthForm({ mode }: AuthFormProps) {
   }, [dispatch])
 
   useEffect(() => {
-    if (token) {
+    if (token && isTokenLoaded) {
       router.push('/')
     }
   }, [token])

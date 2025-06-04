@@ -268,18 +268,6 @@ Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_re
 
 /***/ }),
 
-/***/ 6261:
-/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
-
-Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 4282, 23));
-Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 6505, 23));
-Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 2987, 23));
-Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 831, 23));
-Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 6926, 23));
-Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 1232, 23))
-
-/***/ }),
-
 /***/ 8562:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -845,15 +833,18 @@ function Home() {
     const router = (0,navigation.useRouter)();
     const [userData, setUserData] = (0,react_.useState)(null);
     const [isFetching, setFetching] = (0,react_.useState)(false);
+    const [isTokenLoaded, setIsTokenLoaded] = (0,react_.useState)(false);
     const dispatch = (0,lib.useDispatch)();
     const token = (0,store/* useAppSelector */.C)((state)=>state.authReducer.value.token);
     (0,react_.useEffect)(()=>{
         dispatch((0,auth_slice/* loadTokenFromStorage */.qb)());
+        setIsTokenLoaded(true);
     }, [
         dispatch
     ]);
     (0,react_.useEffect)(()=>{
         try {
+            if (!token && isTokenLoaded) return;
             if (!token) return;
             const decoded = (0,esm/* jwtDecode */.o)(token);
             if (!decoded.exp) {
@@ -912,12 +903,12 @@ function Home() {
         fetchUserData();
     }, []);
     (0,react_.useEffect)(()=>{
-        if (!token) {
+        if (!token && isTokenLoaded) {
             router.push("/login");
         }
     }, [
         token,
-        router
+        isTokenLoaded
     ]);
     const isLoggedIn = token && userData;
     if (isFetching || !isLoggedIn) {
@@ -1002,7 +993,7 @@ const __default__ = proxy.default;
 var __webpack_require__ = require("../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [587,128,285,479], () => (__webpack_exec__(9185)));
+var __webpack_exports__ = __webpack_require__.X(0, [587,128,285,661], () => (__webpack_exec__(9185)));
 module.exports = __webpack_exports__;
 
 })();

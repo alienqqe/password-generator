@@ -20,6 +20,7 @@ export default function Home() {
   const router = useRouter()
   const [userData, setUserData] = useState<userDataType | null>(null)
   const [isFetching, setFetching] = useState(false)
+  const [isTokenLoaded, setIsTokenLoaded] = useState(false)
 
   const dispatch = useDispatch<AppDispatch>()
 
@@ -27,10 +28,12 @@ export default function Home() {
 
   useEffect(() => {
     dispatch(loadTokenFromStorage())
+    setIsTokenLoaded(true)
   }, [dispatch])
 
   useEffect(() => {
     try {
+      if (!token && isTokenLoaded) return
       if (!token) return
 
       const decoded = jwtDecode(token)
@@ -99,10 +102,10 @@ export default function Home() {
   }, [])
 
   useEffect(() => {
-    if (!token) {
+    if (!token && isTokenLoaded) {
       router.push('/login')
     }
-  }, [token, router])
+  }, [token, isTokenLoaded])
 
   const isLoggedIn = token && userData
 
