@@ -882,7 +882,7 @@ function Home() {
         setFetching(true);
         const fetchUserData = async ()=>{
             try {
-                if (!token || isTokenLoaded) {
+                if (!token || !isTokenLoaded) {
                     return;
                 }
                 const res = await fetch(url, {
@@ -897,7 +897,6 @@ function Home() {
                 }
                 const jsonData = await res.json();
                 setUserData(jsonData);
-                console.log(userData);
             } catch (err) {
                 console.error("Failed to fetch data", err);
                 router.push("/login");

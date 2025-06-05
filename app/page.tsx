@@ -39,7 +39,7 @@ export default function Home() {
       if (!token && isTokenLoaded) return
       if (!token) return
 
-      const decoded = jwtDecode(token)
+      const decoded = jwtDecode<{ exp: number }>(token)
       if (!decoded.exp) {
         console.warn('Decoded token doesnt have expiration date! Logging out')
         dispatch(logout())
@@ -75,7 +75,7 @@ export default function Home() {
     setFetching(true)
     const fetchUserData = async () => {
       try {
-        if (!token || isTokenLoaded) {
+        if (!token || !isTokenLoaded) {
           return
         }
 
@@ -91,7 +91,6 @@ export default function Home() {
 
         const jsonData = await res.json()
         setUserData(jsonData)
-        console.log(userData)
       } catch (err) {
         console.error('Failed to fetch data', err)
         router.push('/login')
