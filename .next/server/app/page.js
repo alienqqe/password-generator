@@ -284,18 +284,6 @@ Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_re
 
 /***/ }),
 
-/***/ 3109:
-/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
-
-Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 2987, 23));
-Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 831, 23));
-Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 6926, 23));
-Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 1144, 23));
-Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 6505, 23));
-Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 1232, 23))
-
-/***/ }),
-
 /***/ 117:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -879,7 +867,7 @@ const Pwned = ()=>{
         setResult(found ? `Your password has been detected in ${breaches}  ${breaches === 1 ? "breach" : "breaches"} ` : `Congratulations! Your password was found in ${breaches} breaches`);
     };
     return /*#__PURE__*/ jsx_runtime_.jsx("div", {
-        className: "password-container text-center ms-md-5 shadow p-2 rounded",
+        className: "password-container text-center ms-md-5 mb-5 shadow p-2 rounded ",
         children: /*#__PURE__*/ (0,jsx_runtime_.jsxs)("form", {
             onSubmit: checkPassword,
             children: [
@@ -1109,7 +1097,7 @@ const __default__ = proxy.default;
 var __webpack_require__ = require("../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [587,128,312,479], () => (__webpack_exec__(9185)));
+var __webpack_exports__ = __webpack_require__.X(0, [587,128,312,661], () => (__webpack_exec__(9185)));
 module.exports = __webpack_exports__;
 
 })();

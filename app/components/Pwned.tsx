@@ -43,7 +43,7 @@ const Pwned = () => {
   }
 
   return (
-    <div className='password-container text-center ms-md-5 shadow p-2 rounded'>
+    <div className='password-container text-center ms-md-5 mb-5 shadow p-2 rounded '>
       <form onSubmit={checkPassword}>
         <h5 className='pt-2'>Have your password been pwned?</h5>
         <div className='input-group mb-3 mt-3'>
