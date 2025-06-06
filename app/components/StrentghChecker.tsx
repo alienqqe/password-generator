@@ -18,7 +18,7 @@ const StrentghChecker = () => {
     alert('Text copied')
   }
   return (
-    <div className='password-container ms-md-5 mt-5 shadow p-3 rounded'>
+    <div className='password-container ms-md-5 mb-5 shadow p-3 rounded'>
       <h4 className='pb-1'>Password Strength Check</h4>
       <div className=''>
         <span className='password-text'>

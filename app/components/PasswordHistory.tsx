@@ -97,7 +97,7 @@ const PasswordHistory = () => {
   }
 
   return (
-    <div className='password-container dropdown ms-md-5 mt-5 shadow p-3 rounded'>
+    <div className='password-container dropdown mt-5 mt-md-3 mb-5 shadow p-3 rounded'>
       <button
         className='btn btn-sm dropdown- mt-1'
         type='button'
@@ -113,10 +113,10 @@ const PasswordHistory = () => {
           border: 'none',
         }}
       >
-        <h5>Password History</h5>
+        <h5>Generated Passwords</h5>
       </button>
 
-      <ul className='dropdown-menu show' aria-labelledby='dropdownMenuButton1'>
+      <ul className='dropdown-menu ' aria-labelledby='dropdownMenuButton1'>
         {passwords.length === 0 ? (
           <li className='dropdown-item text-muted'>No saved passwords</li>
         ) : (

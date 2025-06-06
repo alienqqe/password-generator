@@ -10,6 +10,7 @@ import StrentghChecker from './components/StrentghChecker'
 import { AppDispatch, useAppSelector } from '@/redux/store'
 import { useDispatch } from 'react-redux'
 import { logout, loadTokenFromStorage } from '@/redux/features/auth-slice'
+import Pwned from './components/Pwned'
 
 interface userDataType {
   email: string
@@ -133,10 +134,15 @@ export default function Home() {
     <>
       <Navbar userData={userData} />
       <div className='d-flex align-items-center justify-content-center flex-column flex-md-row'>
-        <Generator />
+        <div className='d-flex align-items-center justify-content-center flex-column'>
+          <Generator />
+          <PasswordHistory />
+        </div>
+
         <div className='d-flex align-items-center flex-column justify-content-center'>
           <StrentghChecker />
-          <PasswordHistory />
+
+          <Pwned />
         </div>
       </div>
     </>

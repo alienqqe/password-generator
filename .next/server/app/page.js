@@ -148,6 +148,22 @@ module.exports = require("next/dist/shared/lib/server-inserted-html");
 
 /***/ }),
 
+/***/ 4300:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("buffer");
+
+/***/ }),
+
+/***/ 3663:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("crypto");
+
+/***/ }),
+
 /***/ 1017:
 /***/ ((module) => {
 
@@ -264,11 +280,23 @@ const routeModule = new AppPageRouteModule({
 /***/ 2537:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 8562))
+Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 117))
 
 /***/ }),
 
-/***/ 8562:
+/***/ 3109:
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+
+Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 2987, 23));
+Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 831, 23));
+Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 6926, 23));
+Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 1144, 23));
+Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 6505, 23));
+Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 1232, 23))
+
+/***/ }),
+
+/***/ 117:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -701,7 +729,7 @@ const PasswordHistory_PasswordHistory = ()=>{
         }
     };
     return /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
-        className: "password-container dropdown ms-md-5 mt-5 shadow p-3 rounded",
+        className: "password-container dropdown mt-5 mt-md-3 mb-5 shadow p-3 rounded",
         children: [
             /*#__PURE__*/ jsx_runtime_.jsx("button", {
                 className: "btn btn-sm dropdown- mt-1",
@@ -718,11 +746,11 @@ const PasswordHistory_PasswordHistory = ()=>{
                     border: "none"
                 },
                 children: /*#__PURE__*/ jsx_runtime_.jsx("h5", {
-                    children: "Password History"
+                    children: "Generated Passwords"
                 })
             }),
             /*#__PURE__*/ jsx_runtime_.jsx("ul", {
-                className: "dropdown-menu show",
+                className: "dropdown-menu ",
                 "aria-labelledby": "dropdownMenuButton1",
                 children: passwords.length === 0 ? /*#__PURE__*/ jsx_runtime_.jsx("li", {
                     className: "dropdown-item text-muted",
@@ -766,7 +794,7 @@ const StrentghChecker = ()=>{
         alert("Text copied");
     };
     return /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
-        className: "password-container ms-md-5 mt-5 shadow p-3 rounded",
+        className: "password-container ms-md-5 mb-5 shadow p-3 rounded",
         children: [
             /*#__PURE__*/ jsx_runtime_.jsx("h4", {
                 className: "pb-1",
@@ -816,8 +844,83 @@ const StrentghChecker = ()=>{
 };
 /* harmony default export */ const components_StrentghChecker = (StrentghChecker);
 
+// EXTERNAL MODULE: ./node_modules/js-sha1/src/sha1.js
+var sha1 = __webpack_require__(6416);
+// EXTERNAL MODULE: ../node_modules/react-icons/fa/index.esm.js
+var index_esm = __webpack_require__(2449);
+;// CONCATENATED MODULE: ./app/components/Pwned.tsx
+/* __next_internal_client_entry_do_not_use__ default auto */ 
+
+
+
+const Pwned = ()=>{
+    const [password, setPassword] = (0,react_.useState)("");
+    const [result, setResult] = (0,react_.useState)(null);
+    const [passwordPreview, setPreview] = (0,react_.useState)(false);
+    const checkPassword = async (e)=>{
+        e.preventDefault();
+        const hash = (0,sha1.sha1)(password).toUpperCase();
+        console.log(hash);
+        const prefix = hash.slice(0, 5);
+        const suffix = hash.slice(5);
+        let breaches = 0;
+        let found = false;
+        const fetchedData = await fetch(`https://api.pwnedpasswords.com/range/${prefix}`);
+        const text = await fetchedData.text();
+        const splittedData = text.split("\n");
+        for (let line of splittedData){
+            const splited = line.trim().split(":");
+            if (splited[0] === suffix) {
+                found = true;
+                console.log(splited[1]);
+                breaches = parseInt(splited[1]);
+            }
+        }
+        setResult(found ? `Your password has been detected in ${breaches}  ${breaches === 1 ? "breach" : "breaches"} ` : `Congratulations! Your password was found in ${breaches} breaches`);
+    };
+    return /*#__PURE__*/ jsx_runtime_.jsx("div", {
+        className: "password-container text-center ms-md-5 shadow p-2 rounded",
+        children: /*#__PURE__*/ (0,jsx_runtime_.jsxs)("form", {
+            onSubmit: checkPassword,
+            children: [
+                /*#__PURE__*/ jsx_runtime_.jsx("h5", {
+                    className: "pt-2",
+                    children: "Have your password been pwned?"
+                }),
+                /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
+                    className: "input-group mb-3 mt-3",
+                    children: [
+                        /*#__PURE__*/ jsx_runtime_.jsx("input", {
+                            type: passwordPreview ? "text" : "password",
+                            className: "form-control input",
+                            placeholder: "Password",
+                            "aria-label": "Password",
+                            value: password,
+                            onChange: (e)=>setPassword(e.target.value),
+                            "aria-describedby": "button-addon2"
+                        }),
+                        /*#__PURE__*/ jsx_runtime_.jsx("button", {
+                            className: "btn btn-secondary",
+                            type: "button",
+                            id: "button-addon2",
+                            onClick: ()=>setPreview(!passwordPreview),
+                            children: passwordPreview ? /*#__PURE__*/ jsx_runtime_.jsx(index_esm/* FaRegEyeSlash */.tjB, {}) : /*#__PURE__*/ jsx_runtime_.jsx(index_esm/* FaRegEye */.z5B, {})
+                        })
+                    ]
+                }),
+                result ? /*#__PURE__*/ jsx_runtime_.jsx("p", {
+                    className: "mt-1 fw-bold",
+                    children: result
+                }) : ""
+            ]
+        })
+    });
+};
+/* harmony default export */ const components_Pwned = (Pwned);
+
 ;// CONCATENATED MODULE: ./app/page.tsx
 /* __next_internal_client_entry_do_not_use__ default auto */ 
+
 
 
 
@@ -943,12 +1046,18 @@ function Home() {
             /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
                 className: "d-flex align-items-center justify-content-center flex-column flex-md-row",
                 children: [
-                    /*#__PURE__*/ jsx_runtime_.jsx(components_Generator, {}),
+                    /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
+                        className: "d-flex align-items-center justify-content-center flex-column",
+                        children: [
+                            /*#__PURE__*/ jsx_runtime_.jsx(components_Generator, {}),
+                            /*#__PURE__*/ jsx_runtime_.jsx(components_PasswordHistory, {})
+                        ]
+                    }),
                     /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
                         className: "d-flex align-items-center flex-column justify-content-center",
                         children: [
                             /*#__PURE__*/ jsx_runtime_.jsx(components_StrentghChecker, {}),
-                            /*#__PURE__*/ jsx_runtime_.jsx(components_PasswordHistory, {})
+                            /*#__PURE__*/ jsx_runtime_.jsx(components_Pwned, {})
                         ]
                     })
                 ]
@@ -1000,7 +1109,7 @@ const __default__ = proxy.default;
 var __webpack_require__ = require("../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [587,128,285,661], () => (__webpack_exec__(9185)));
+var __webpack_exports__ = __webpack_require__.X(0, [587,128,312,479], () => (__webpack_exec__(9185)));
 module.exports = __webpack_exports__;
 
 })();
