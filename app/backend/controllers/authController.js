@@ -1,6 +1,8 @@
 const bcrypt = require('bcrypt')
+const crypto = require('crypto')
 const jwt = require('jsonwebtoken')
 const supabase = require('../supabaseClient')
+const { sendVerificationEmail } = require('../../utils/mailer')
 
 exports.register = async (req, res) => {
   const { email, password } = req.body
@@ -23,19 +25,35 @@ exports.register = async (req, res) => {
       })
     }
 
+    const temporaryVerificationToken = crypto.randomBytes(32).toString('hex')
+    console.log(temporaryVerificationToken)
+
     const { data, error } = await supabase
       .from('users')
-      .insert([{ email, password: hashed }])
+      .insert([
+        {
+          email,
+          password: hashed,
+          verified: false,
+          verification_token: temporaryVerificationToken,
+        },
+      ])
       .select()
 
     if (error) {
       return res.status(400).json({ error: error.message })
     }
 
-    res.status(201).json({ message: 'User registered', user: data[0] })
+    await sendVerificationEmail(email, temporaryVerificationToken)
+
+    res.status(201).json({
+      message: 'User registered',
+      user: data[0],
+      temporaryToken: temporaryVerificationToken,
+    })
   } catch (err) {
     console.error('Register error', err)
-    res.status(500).json({ error: 'Server error' })
+    res.status(500).json({ error: 'Server error', message: err.message })
   }
 }
 
@@ -54,6 +72,11 @@ exports.login = async (req, res) => {
     }
 
     const user = users[0]
+    console.log(user.verified)
+
+    if (!user.verified) {
+      return res.status(403).json({ error: 'Email not verified' })
+    }
 
     const passwordMatch = await bcrypt.compare(password, user.password)
 
@@ -71,6 +94,44 @@ exports.login = async (req, res) => {
     res.json({ message: 'Login successful', token })
   } catch (err) {
     console.error('Login error:', err)
+    res.status(500).json({ error: 'Server error' })
+  }
+}
+
+exports.verifyEmail = async (req, res) => {
+  const { token } = req.query
+  console.log(token)
+
+  if (!token) return res.status(400).json({ error: 'Missing token' })
+
+  try {
+    const { data: users, error } = await supabase
+      .from('users')
+      .select('*')
+      .eq('verification_token', token)
+      .limit(1)
+
+    if (error || users.length === 0) {
+      const errorMessage = error
+        ? error.message
+        : 'No user found with that token or token expired.'
+      return res
+        .status(400)
+        .json({ error: 'Invalid or expired token', message: errorMessage })
+    }
+
+    const user = users[0]
+
+    const { error: updateError } = await supabase
+      .from('users')
+      .update({ verified: true, verification_token: null })
+      .eq('id', user.id)
+
+    if (updateError) return res.status(500).json({ error: updateError.message })
+
+    res.json({ message: 'Email successfully verified. You can now log in.' })
+  } catch (err) {
+    console.error('Verification error:', err)
     res.status(500).json({ error: 'Server error' })
   }
 }

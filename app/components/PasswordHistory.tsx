@@ -38,8 +38,7 @@ const PasswordHistory = () => {
       </div>
     )
 
-  const url =
-    'https://password-gen-backend-production.up.railway.app/api/password/getHistory'
+  const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/password/getHistory`
 
   // fetchHistory
   const fetchData = async () => {
@@ -73,8 +72,7 @@ const PasswordHistory = () => {
     }
   }, [isSaving])
 
-  const deleteUrl =
-    'https://password-gen-backend-production.up.railway.app/api/password/override'
+  const deleteUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/password/override`
   const handleDelete = async (password: string) => {
     try {
       const res = await fetch(deleteUrl, {

@@ -1,8 +1,6 @@
 'use client'
-
 import { changeStrengthCheckerValue } from '@/redux/features/password-slice'
 import { AppDispatch, useAppSelector } from '@/redux/store'
-import { useState } from 'react'
 import PasswordStrengthBar from 'react-password-strength-bar'
 import { useDispatch } from 'react-redux'
 

@@ -34,8 +34,7 @@ const Generator = () => {
     (state) => state.authReducer.value.token
   )
 
-  const getSettingsUrl =
-    'https://password-gen-backend-production.up.railway.app/api/settings/getSettings'
+  const getSettingsUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/settings/getSettings`
 
   // read setting from db
   const fetchSettings = async () => {
@@ -75,8 +74,7 @@ const Generator = () => {
     }
   }, [isSavingToSettings])
 
-  const saveSettingsUrl =
-    'https://password-gen-backend-production.up.railway.app/api/settings/set'
+  const saveSettingsUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/settings/set`
 
   // save settings to the db
   useEffect(() => {
@@ -114,8 +112,7 @@ const Generator = () => {
     }
   }, [isSymbols, isUppercase, isNumbers, length, settingsFetched])
 
-  const url =
-    'https://password-gen-backend-production.up.railway.app/api/password/save'
+  const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/password/save`
 
   // save password to the history
   useEffect(() => {

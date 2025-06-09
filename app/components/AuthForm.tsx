@@ -15,6 +15,8 @@ interface AuthFormProps {
 interface ApiResponse {
   token?: string
   error?: string
+  message?: string
+  temporaryToken?: string
 }
 
 export default function AuthForm({ mode }: AuthFormProps) {
@@ -25,6 +27,7 @@ export default function AuthForm({ mode }: AuthFormProps) {
   const router = useRouter()
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
+  const [successMessage, setSuccessMessage] = useState<string | null>(null)
   const [isTokenLoaded, setLoaded] = useState(false)
 
   useEffect(() => {
@@ -43,11 +46,13 @@ export default function AuthForm({ mode }: AuthFormProps) {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
+    setError(null)
+    setSuccessMessage(null)
 
     const url =
       mode === 'login'
-        ? 'https://password-gen-backend-production.up.railway.app/api/auth/login'
-        : 'https://password-gen-backend-production.up.railway.app/api/auth/register'
+        ? `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/login`
+        : `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/register`
 
     try {
       setIsFetching(true)
@@ -62,13 +67,22 @@ export default function AuthForm({ mode }: AuthFormProps) {
         setIsFetching(false)
         throw new Error(data.error || 'Something went wrong')
       }
+      console.log(data)
 
-      if (mode === 'login' && data.token) {
+      if (data.error) {
+        setIsFetching(false)
+        setError(data.error)
+        return
+      }
+
+      if (mode === 'login' && data.token && !error) {
         dispatch(login(data.token))
         router.push('/')
       } else if (mode === 'register') {
-        alert('Registration successful! Please login.')
-        router.push('/login')
+        setSuccessMessage(
+          data.message ||
+            'Registration successful! Please check your email to verify your account and log in.'
+        )
       }
     } catch (err: any) {
       setError(err.message)
@@ -118,6 +132,7 @@ export default function AuthForm({ mode }: AuthFormProps) {
               onChange={(e) => setPassword(e.target.value)}
               required
             />
+            {successMessage && <p className='text-success'>{successMessage}</p>}
             {error && <p style={{ color: 'red' }}>{error}</p>}
             <button className='btn btn-lg btn-primary' type='submit'>
               {mode === 'login' ? 'Login' : 'Register'}
