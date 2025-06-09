@@ -334,7 +334,7 @@ const Generator = ()=>{
     ]);
     const result = (0,store/* useAppSelector */.C)((state)=>state.passwordReducer.value.result);
     const token = (0,store/* useAppSelector */.C)((state)=>state.authReducer.value.token);
-    const getSettingsUrl = `${"https://password-gen-backend-production.up.railway.app"}/api/settings/getSettings`;
+    const getSettingsUrl = `${"https://password-gen-backend.onrender.com"}/api/settings/getSettings`;
     // read setting from db
     const fetchSettings = async ()=>{
         if (!token) return;
@@ -367,7 +367,7 @@ const Generator = ()=>{
     }, [
         isSavingToSettings
     ]);
-    const saveSettingsUrl = `${"https://password-gen-backend-production.up.railway.app"}/api/settings/set`;
+    const saveSettingsUrl = `${"https://password-gen-backend.onrender.com"}/api/settings/set`;
     // save settings to the db
     (0,react_.useEffect)(()=>{
         if (!settingsFetched || !token) return;
@@ -405,7 +405,7 @@ const Generator = ()=>{
         length,
         settingsFetched
     ]);
-    const url = `${"https://password-gen-backend-production.up.railway.app"}/api/password/save`;
+    const url = `${"https://password-gen-backend.onrender.com"}/api/password/save`;
     // save password to the history
     (0,react_.useEffect)(()=>{
         const whiteSpaceRegEx = new RegExp(/\s/g);
@@ -665,7 +665,7 @@ const PasswordHistory_PasswordHistory = ()=>{
             wrapperClass: ""
         })
     });
-    const url = `${"https://password-gen-backend-production.up.railway.app"}/api/password/getHistory`;
+    const url = `${"https://password-gen-backend.onrender.com"}/api/password/getHistory`;
     // fetchHistory
     const fetchData = async ()=>{
         try {
@@ -696,7 +696,7 @@ const PasswordHistory_PasswordHistory = ()=>{
     }, [
         isSaving
     ]);
-    const deleteUrl = `${"https://password-gen-backend-production.up.railway.app"}/api/password/override`;
+    const deleteUrl = `${"https://password-gen-backend.onrender.com"}/api/password/override`;
     const handleDelete = async (password)=>{
         try {
             const res = await fetch(deleteUrl, {
@@ -1097,7 +1097,7 @@ const __default__ = proxy.default;
 var __webpack_require__ = require("../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [587,977,550,312,479,109], () => (__webpack_exec__(9185)));
+var __webpack_exports__ = __webpack_require__.X(0, [587,977,550,312,661], () => (__webpack_exec__(9185)));
 module.exports = __webpack_exports__;
 
 })();
