@@ -33,7 +33,7 @@
       "static/chunks/713-3678bd5ea7658480.js",
       "static/chunks/662-63f6b15fee0b8e26.js",
       "static/css/41b972898bf2d8f6.css",
-      "static/chunks/app/login/page-6da471bcc87fff46.js"
+      "static/chunks/app/login/page-ef37caa7ceb5f18e.js"
     ],
     "/register/page": [
       "static/chunks/webpack-1e982a3a0b76e615.js",
@@ -44,7 +44,7 @@
       "static/chunks/713-3678bd5ea7658480.js",
       "static/chunks/662-63f6b15fee0b8e26.js",
       "static/css/41b972898bf2d8f6.css",
-      "static/chunks/app/register/page-226a813231259f69.js"
+      "static/chunks/app/register/page-85b1b68f29e17a73.js"
     ],
     "/verify-email/page": [
       "static/chunks/webpack-1e982a3a0b76e615.js",

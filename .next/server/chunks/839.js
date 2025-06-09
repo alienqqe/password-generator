@@ -99,7 +99,7 @@ function AuthForm({ mode }) {
                 dispatch((0,_redux_features_auth_slice__WEBPACK_IMPORTED_MODULE_7__/* .login */ .x4)(data.token));
                 router.push("/");
             } else if (mode === "register") {
-                setSuccessMessage(data.message || "Registration successful! Please check your email to verify your account and log in.");
+                setSuccessMessage("Registration successful! Please check your email to verify your account and log in.");
             }
         } catch (err) {
             setError(err.message);

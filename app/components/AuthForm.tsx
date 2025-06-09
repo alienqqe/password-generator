@@ -80,8 +80,7 @@ export default function AuthForm({ mode }: AuthFormProps) {
         router.push('/')
       } else if (mode === 'register') {
         setSuccessMessage(
-          data.message ||
-            'Registration successful! Please check your email to verify your account and log in.'
+          'Registration successful! Please check your email to verify your account and log in.'
         )
       }
     } catch (err: any) {
