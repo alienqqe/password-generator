@@ -86,6 +86,8 @@ export default function AuthForm({ mode }: AuthFormProps) {
       }
     } catch (err: any) {
       setError(err.message)
+    } finally {
+      setIsFetching(false)
     }
   }
 
