@@ -91,7 +91,7 @@ export default function AuthForm({ mode }: AuthFormProps) {
 
   return (
     <>
-      {isFetching || !isTokenLoaded || token ? (
+      {isFetching || !isTokenLoaded ? (
         <div
           className='d-flex justify-content-center align-items-center'
           style={{ height: '100vh' }}
