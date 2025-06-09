@@ -19,7 +19,7 @@ const page = () => {
 
       try {
         const res = await fetch(
-          `http://localhost:4000/api/auth/verify-email?token=${token}`,
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/verify-email?token=${token}`,
           {
             method: 'GET',
           }
