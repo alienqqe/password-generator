@@ -301,7 +301,7 @@ const page = ()=>{
                 return;
             }
             try {
-                const res = await fetch(`http://localhost:4000/api/auth/verify-email?token=${token}`, {
+                const res = await fetch(`${"https://password-gen-backend.onrender.com"}/api/auth/verify-email?token=${token}`, {
                     method: "GET"
                 });
                 const data = await res.json();
