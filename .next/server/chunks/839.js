@@ -149,20 +149,30 @@ function AuthForm({ mode }) {
                         onChange: (e)=>setPassword(e.target.value),
                         required: true
                     }),
-                    successMessage && /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("p", {
+                    successMessage ? /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("p", {
                         className: "text-success",
                         children: successMessage
-                    }),
-                    error && /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("p", {
-                        style: {
-                            color: "red"
-                        },
+                    }) : "",
+                    error ? /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("p", {
+                        className: "text-danger",
                         children: error
-                    }),
+                    }) : "",
                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("button", {
                         className: "btn btn-lg btn-primary",
                         type: "submit",
                         children: mode === "login" ? "Login" : "Register"
+                    }),
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                        className: "text-center",
+                        style: {
+                            width: "100%"
+                        },
+                        children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("p", {
+                            children: mode === "login" ? /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("a", {
+                                href: "/forgot-password",
+                                children: "Forgot password?"
+                            }) : ""
+                        })
                     }),
                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("p", {
                         children: mode === "login" ? /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
@@ -219,6 +229,14 @@ const __default__ = proxy.default;
 /***/ 8920:
 /***/ (() => {
 
+
+
+/***/ }),
+
+/***/ 7114:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__(696)
 
 
 /***/ })

@@ -2,7 +2,10 @@ const bcrypt = require('bcrypt')
 const crypto = require('crypto')
 const jwt = require('jsonwebtoken')
 const supabase = require('../supabaseClient')
-const { sendVerificationEmail } = require('../../utils/mailer')
+const {
+  sendVerificationEmail,
+  sendResetPasswordEmail,
+} = require('../../utils/mailer')
 
 exports.register = async (req, res) => {
   const { email, password } = req.body
@@ -100,7 +103,6 @@ exports.login = async (req, res) => {
 
 exports.verifyEmail = async (req, res) => {
   const { token } = req.query
-  console.log(token)
 
   if (!token) return res.status(400).json({ error: 'Missing token' })
 
@@ -133,5 +135,86 @@ exports.verifyEmail = async (req, res) => {
   } catch (err) {
     console.error('Verification error:', err)
     res.status(500).json({ error: 'Server error' })
+  }
+}
+
+exports.forgotPassword = async (req, res) => {
+  const { email } = req.body
+
+  try {
+    const { data: user, error } = await supabase
+      .from('users')
+      .select('*')
+      .eq('email', email)
+
+    if (error || user.length === 0) {
+      const errorMessage = error
+        ? error.message
+        : 'No user found with that email.'
+      return res
+        .status(400)
+        .json({ error: 'Error happened', message: errorMessage })
+    }
+    if (error) {
+      return res
+        .status(400)
+        .json({ error: 'Error happened', message: error.message })
+    }
+
+    const tempToken = crypto.randomBytes(32).toString('hex')
+
+    const { data, updateError } = await supabase
+      .from('users')
+      .update({ reset_token: tempToken })
+      .eq('id', user[0].id)
+
+    if (updateError) {
+      return res
+        .status(400)
+        .json({ error: 'Error happened', message: error.message })
+    }
+
+    await sendResetPasswordEmail(user[0].email, tempToken)
+
+    return res.status(200).json({ temporaryToken: tempToken })
+  } catch (err) {
+    return res.status(400).json({ error: err.message })
+  }
+}
+
+exports.resetPassword = async (req, res) => {
+  const { newPassword, token } = req.body
+
+  try {
+    const { data: existingUser, error } = await supabase
+      .from('users')
+      .select('*')
+      .eq('reset_token', token)
+
+    if (existingUser.length === 0 || error) {
+      const errorMessage = error ? error.message : 'Invalid token'
+      return res
+        .status(400)
+        .json({ error: 'Invalid or expired token', message: errorMessage })
+    }
+
+    const hashed = await bcrypt.hash(newPassword, 10)
+
+    const { data, error: updateError } = await supabase
+      .from('users')
+      .update({ password: hashed, reset_token: null })
+      .eq('reset_token', token)
+
+    if (updateError) {
+      return res
+        .status(500)
+        .json({ error: 'Update error', message: updateError.message })
+    }
+
+    res
+      .status(200)
+      .json({ message: 'Password successfully changed. You can now log in' })
+  } catch (err) {
+    return res.status(400).json({ error: err.message })
   }
 }

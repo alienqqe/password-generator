@@ -133,11 +133,25 @@ export default function AuthForm({ mode }: AuthFormProps) {
               onChange={(e) => setPassword(e.target.value)}
               required
             />
-            {successMessage && <p className='text-success'>{successMessage}</p>}
-            {error && <p style={{ color: 'red' }}>{error}</p>}
+            {successMessage ? (
+              <p className='text-success'>{successMessage}</p>
+            ) : (
+              ''
+            )}
+            {error ? <p className='text-danger'>{error}</p> : ''}
             <button className='btn btn-lg btn-primary' type='submit'>
               {mode === 'login' ? 'Login' : 'Register'}
             </button>
+            <div className='text-center' style={{ width: '100%' }}>
+              <p>
+                {mode === 'login' ? (
+                  <a href='/forgot-password'>Forgot password?</a>
+                ) : (
+                  ''
+                )}
+              </p>
+            </div>
+
             <p>
               {mode === 'login' ? (
                 <>

@@ -1,8 +1,10 @@
 {
-  "/favicon.ico/route": "/favicon.ico",
   "/page": "/",
+  "/favicon.ico/route": "/favicon.ico",
   "/login/page": "/login",
   "/register/page": "/register",
+  "/reset-password/page": "/reset-password",
+  "/forgot-password/page": "/forgot-password",
   "/verify-email/page": "/verify-email",
   "/backend/node_modules/router/lib/route": "/backend/node_modules/router/lib"
 }
