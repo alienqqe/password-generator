@@ -71,7 +71,7 @@ function AuthForm({ mode }) {
         e.preventDefault();
         setError(null);
         setSuccessMessage(null);
-        const url = mode === "login" ? `${"https://password-gen-backend.onrender.com"}/api/auth/login` : `${"https://password-gen-backend.onrender.com"}/api/auth/register`;
+        const url = mode === "login" ? `${"http://localhost:4000"}/api/auth/login` : `${"http://localhost:4000"}/api/auth/register`;
         try {
             setIsFetching(true);
             const res = await fetch(url, {
@@ -96,7 +96,7 @@ function AuthForm({ mode }) {
                 return;
             }
             if (mode === "login" && data.token && !error) {
-                dispatch((0,_redux_features_auth_slice__WEBPACK_IMPORTED_MODULE_7__/* .login */ .x4)(data.token));
+                await dispatch((0,_redux_features_auth_slice__WEBPACK_IMPORTED_MODULE_7__/* .login */ .x4)(data.token));
                 router.push("/");
             } else if (mode === "register") {
                 setSuccessMessage("Registration successful! Please check your email to verify your account and log in.");

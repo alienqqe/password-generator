@@ -69,8 +69,7 @@ export default function Home() {
     }
   }, [token, isTokenLoaded])
 
-  const url =
-    'https://password-gen-backend-production.up.railway.app/api/auth/me'
+  const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/me`
 
   useEffect(() => {
     setFetching(true)

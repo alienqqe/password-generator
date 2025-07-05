@@ -335,7 +335,7 @@ const page = ()=>{
             setError("Passwords doesn't match");
             return;
         }
-        const url = `${"https://password-gen-backend.onrender.com"}/api/auth/reset-password`;
+        const url = `${"http://localhost:4000"}/api/auth/reset-password`;
         try {
             setIsFetching(true);
             const res = await fetch(url, {

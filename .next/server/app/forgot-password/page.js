@@ -306,7 +306,7 @@ const page = ()=>{
         e.preventDefault();
         setError(null);
         setSuccessMessage(null);
-        const url = `${"https://password-gen-backend.onrender.com"}/api/auth/forgot-password`;
+        const url = `${"http://localhost:4000"}/api/auth/forgot-password`;
         try {
             setIsFetching(true);
             const res = await fetch(url, {

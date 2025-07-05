@@ -76,7 +76,7 @@ export default function AuthForm({ mode }: AuthFormProps) {
       }
 
       if (mode === 'login' && data.token && !error) {
-        dispatch(login(data.token))
+        await dispatch(login(data.token))
         router.push('/')
       } else if (mode === 'register') {
         setSuccessMessage(
