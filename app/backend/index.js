@@ -27,7 +27,7 @@ app.use('/api/password', passwordRoutes)
 app.use('/api/settings', settingsRoutes)
 
 const temporaryVerificationToken = crypto.randomBytes(32).toString('hex')
-console.log(temporaryVerificationToken)
+console.log('Temporary verification token:', temporaryVerificationToken)
 
 const PORT = process.env.PORT || 4000
 app.listen(PORT, () => console.log(`Server is listening on port ${PORT}`))
