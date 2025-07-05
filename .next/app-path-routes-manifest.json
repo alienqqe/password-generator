@@ -3,8 +3,8 @@
   "/page": "/",
   "/forgot-password/page": "/forgot-password",
   "/login/page": "/login",
-  "/register/page": "/register",
   "/reset-password/page": "/reset-password",
   "/verify-email/page": "/verify-email",
-  "/backend/node_modules/router/lib/route": "/backend/node_modules/router/lib"
+  "/backend/node_modules/router/lib/route": "/backend/node_modules/router/lib",
+  "/register/page": "/register"
 }

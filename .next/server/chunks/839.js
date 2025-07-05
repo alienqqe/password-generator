@@ -71,7 +71,7 @@ function AuthForm({ mode }) {
         e.preventDefault();
         setError(null);
         setSuccessMessage(null);
-        const url = mode === "login" ? `${"http://localhost:4000"}/api/auth/login` : `${"http://localhost:4000"}/api/auth/register`;
+        const url = mode === "login" ? `${"https://password-gen-backend.onrender.com"}/api/auth/login` : `${"https://password-gen-backend.onrender.com"}/api/auth/register`;
         try {
             setIsFetching(true);
             const res = await fetch(url, {

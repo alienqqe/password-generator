@@ -334,7 +334,7 @@ const Generator = ()=>{
     ]);
     const result = (0,store/* useAppSelector */.C)((state)=>state.passwordReducer.value.result);
     const token = (0,store/* useAppSelector */.C)((state)=>state.authReducer.value.token);
-    const getSettingsUrl = `${"http://localhost:4000"}/api/settings/getSettings`;
+    const getSettingsUrl = `${"https://password-gen-backend.onrender.com"}/api/settings/getSettings`;
     // read setting from db
     const fetchSettings = async ()=>{
         if (!token) return;
@@ -367,7 +367,7 @@ const Generator = ()=>{
     }, [
         isSavingToSettings
     ]);
-    const saveSettingsUrl = `${"http://localhost:4000"}/api/settings/set`;
+    const saveSettingsUrl = `${"https://password-gen-backend.onrender.com"}/api/settings/set`;
     // save settings to the db
     (0,react_.useEffect)(()=>{
         if (!settingsFetched || !token) return;
@@ -405,7 +405,7 @@ const Generator = ()=>{
         length,
         settingsFetched
     ]);
-    const url = `${"http://localhost:4000"}/api/password/save`;
+    const url = `${"https://password-gen-backend.onrender.com"}/api/password/save`;
     // save password to the history
     (0,react_.useEffect)(()=>{
         const whiteSpaceRegEx = new RegExp(/\s/g);
@@ -665,7 +665,7 @@ const PasswordHistory_PasswordHistory = ()=>{
             wrapperClass: ""
         })
     });
-    const url = `${"http://localhost:4000"}/api/password/getHistory`;
+    const url = `${"https://password-gen-backend.onrender.com"}/api/password/getHistory`;
     // fetchHistory
     const fetchData = async ()=>{
         try {
@@ -696,7 +696,7 @@ const PasswordHistory_PasswordHistory = ()=>{
     }, [
         isSaving
     ]);
-    const deleteUrl = `${"http://localhost:4000"}/api/password/override`;
+    const deleteUrl = `${"https://password-gen-backend.onrender.com"}/api/password/override`;
     const handleDelete = async (password)=>{
         try {
             const res = await fetch(deleteUrl, {
@@ -968,7 +968,7 @@ function Home() {
         token,
         isTokenLoaded
     ]);
-    const url = `${"http://localhost:4000"}/api/auth/me`;
+    const url = `${"https://password-gen-backend.onrender.com"}/api/auth/me`;
     (0,react_.useEffect)(()=>{
         setFetching(true);
         const fetchUserData = async ()=>{
